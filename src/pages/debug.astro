@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+
+const ofertas = await getCollection('ofertas');
+const galeria = await getCollection('galeria');
+
+console.log('Ofertas found:', ofertas.length);
+console.log('Galeria found:', galeria.length);
+console.log('Ofertas data:', ofertas.map(o => ({ id: o.id, title: o.data.title })));
+console.log('Galeria data:', galeria.map(g => ({ id: g.id, title: g.data.title })));
+---
+
+<html>
+<head>
+    <title>Debug Page</title>
+</head>
+<body>
+    <h1>Debug Information</h1>
+    
+    <h2>Ofertas Collection ({ofertas.length} items)</h2>
+    <ul>
+        {ofertas.map(oferta => (
+            <li>
+                <strong>{oferta.id}</strong>: {oferta.data.title} - ${oferta.data.basePrice}
+            </li>
+        ))}
+    </ul>
+    
+    <h2>Galeria Collection ({galeria.length} items)</h2>
+    <ul>
+        {galeria.map(gal => (
+            <li>
+                <strong>{gal.id}</strong>: {gal.data.title} - {gal.data.images.length} images
+            </li>
+        ))}
+    </ul>
+    
+    <h2>Spanish Offers</h2>
+    {ofertas.filter(o => o.id.startsWith('es/')).map(oferta => (
+        <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+            <h3>{oferta.data.title}</h3>
+            <p>{oferta.data.description}</p>
+            <p>Price: ${oferta.data.basePrice}</p>
+            <p>Category: {oferta.data.category}</p>
+        </div>
+    ))}
+</body>
+</html>

@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Thank You for Your Request! - Artisan Bakery"
+  description="We have received your quote request. We will contact you soon."
+  lang="en"
+>
+  <div class="min-h-screen flex items-center justify-center px-4">
+    <div class="max-w-md mx-auto text-center bg-white p-8 rounded-lg shadow-lg">
+      <div class="text-6xl mb-6">🎂</div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-4">Thank You for Your Request!</h1>
+      <p class="text-gray-600 mb-6">
+        We have received your quote request for your custom cake. 
+        We will contact you within the next 24 hours to discuss the details.
+      </p>
+      
+      <div class="bg-pink-50 p-4 rounded-lg mb-6">
+        <h2 class="font-bold text-gray-800 mb-2">What's Next?</h2>
+        <ul class="text-sm text-gray-600 text-left space-y-1">
+          <li>✅ We'll review your request</li>
+          <li>📞 We'll contact you via email or WhatsApp</li>
+          <li>💬 We'll discuss your cake details</li>
+          <li>💰 We'll send you a personalized quote</li>
+        </ul>
+      </div>
+      
+      <div class="space-y-3">
+        <a 
+          href="/en/" 
+          class="block bg-pink-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-pink-600 transition-colors"
+        >
+          Back to Home
+        </a>
+        
+        <a 
+          href="https://wa.me/1234567890?text=Hi,%20I%20just%20sent%20a%20quote%20request" 
+          class="block bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contact via WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

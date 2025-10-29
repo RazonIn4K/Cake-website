@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+
+let ofertas = [];
+let error = null;
+
+try {
+  ofertas = await getCollection('ofertas');
+  console.log('Successfully loaded ofertas:', ofertas.length);
+} catch (e) {
+  error = e.message;
+  console.error('Error loading ofertas:', e);
+}
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50 p-8">
+    <h1 class="text-4xl font-bold text-pink-800 mb-8">Test Page</h1>
+    
+    {error && (
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <strong>Error:</strong> {error}
+        </div>
+    )}
+    
+    <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+        <h2 class="text-2xl font-bold mb-4">Ofertas Found: {ofertas.length}</h2>
+        
+        {ofertas.length > 0 ? (
+            <div class="grid gap-4">
+                {ofertas.map(oferta => (
+                    <div class="border p-4 rounded">
+                        <h3 class="font-bold">{oferta.data.title}</h3>
+                        <p class="text-gray-600">{oferta.data.description}</p>
+                        <p class="text-lg font-semibold">${oferta.data.basePrice}</p>
+                        <p class="text-sm text-gray-500">ID: {oferta.id}</p>
+                    </div>
+                ))}
+            </div>
+        ) : (
+            <p class="text-gray-600">No ofertas found</p>
+        )}
+    </div>
+    
+    <div class="bg-blue-100 p-4 rounded">
+        <h3 class="font-bold">Styling Test</h3>
+        <p class="text-blue-600">If you can see this styled text, Tailwind is working.</p>
+        <button class="bg-pink-500 text-white px-4 py-2 rounded mt-2 hover:bg-pink-600">Test Button</button>
+    </div>
+</body>
+</html>

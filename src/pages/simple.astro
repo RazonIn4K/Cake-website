@@ -1,0 +1,136 @@
+---
+// Simple test without any complex components
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50">
+    <!-- Language Switcher -->
+    <div class="fixed top-4 right-4 z-50">
+        <a href="/en/" class="bg-white px-3 py-1 rounded-full shadow-md hover:shadow-lg transition-shadow">
+            🇺🇸 English
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="text-center py-20 px-4">
+        <h1 class="text-5xl font-bold mb-4 text-pink-800">Pasteles Artesanales que Cuentan tu Historia</h1>
+        <p class="text-xl mb-8">Hechos con amor para celebrar tus momentos más especiales.</p>
+        <div>
+            <a href="#galeria" class="bg-pink-500 text-white font-bold py-3 px-6 rounded-full mr-4 hover:bg-pink-600">Ver Mis Creaciones</a>
+            <a href="#contacto" class="bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-full hover:bg-gray-300">Cotiza tu Pastel</a>
+        </div>
+    </section>
+
+    <!-- Simple Gallery -->
+    <section id="galeria" class="py-20 px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Mi Galería</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            <div class="bg-pink-100 rounded-lg aspect-square flex items-center justify-center">
+                <div class="text-center">
+                    <div class="text-4xl mb-2">🎂</div>
+                    <p class="text-gray-600 text-sm">Pastel de Bodas</p>
+                </div>
+            </div>
+            <div class="bg-pink-100 rounded-lg aspect-square flex items-center justify-center">
+                <div class="text-center">
+                    <div class="text-4xl mb-2">🧁</div>
+                    <p class="text-gray-600 text-sm">Cupcakes Decorados</p>
+                </div>
+            </div>
+            <div class="bg-pink-100 rounded-lg aspect-square flex items-center justify-center">
+                <div class="text-center">
+                    <div class="text-4xl mb-2">🍰</div>
+                    <p class="text-gray-600 text-sm">Pastel de Cumpleaños</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple Offers -->
+    <section class="py-20 px-4 bg-white">
+        <h2 class="text-4xl font-bold text-center mb-12">¿Cómo Puedo Ayudarte?</h2>
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Workshop -->
+            <div class="border border-blue-200 bg-blue-50 rounded-lg p-8 text-center shadow-lg">
+                <div class="text-3xl mb-3">👩‍🍳</div>
+                <h3 class="text-2xl font-bold mb-2">Taller en Vivo de Decoración</h3>
+                <h4 class="text-lg text-pink-600 mb-4">Aprende a Decorar Como una Profesional</h4>
+                <p class="mb-6">Únete a mis talleres en vivo de 90 minutos donde te enseño mis técnicas secretas de decoración.</p>
+                <p class="font-bold text-2xl mb-2">$29 USD</p>
+                <p class="text-sm text-gray-600 mb-6">Precios ajustados por país: MX 70%, CO 60%, AR 50%</p>
+                <a href="https://gumroad.com/l/workshop-decoracion" class="bg-pink-500 text-white font-bold py-3 px-6 rounded-full hover:bg-pink-600">
+                    Inscribirse Ahora
+                </a>
+            </div>
+
+            <!-- Digital Products -->
+            <div class="border border-green-200 bg-green-50 rounded-lg p-8 text-center shadow-lg">
+                <div class="text-3xl mb-3">📱</div>
+                <h3 class="text-2xl font-bold mb-2">Recetas y Guías Digitales</h3>
+                <h4 class="text-lg text-pink-600 mb-4">Mis Secretos, en tu Cocina</h4>
+                <p class="mb-6">Descarga mis recetarios y guías para que puedas practicar y sorprender a tu familia.</p>
+                <p class="font-bold text-2xl mb-2">$19 USD</p>
+                <p class="text-sm text-gray-600 mb-6">Precios ajustados por país: MX 70%, CO 60%, AR 50%</p>
+                <a href="https://gumroad.com/l/recetas-digitales" class="bg-green-500 text-white font-bold py-3 px-6 rounded-full hover:bg-green-600">
+                    Comprar Guías Digitales
+                </a>
+            </div>
+
+            <!-- Consultation -->
+            <div class="border border-purple-200 bg-purple-50 rounded-lg p-8 text-center shadow-lg">
+                <div class="text-3xl mb-3">💬</div>
+                <h3 class="text-2xl font-bold mb-2">Asesoría Express 48h</h3>
+                <h4 class="text-lg text-pink-600 mb-4">Consulta Personalizada</h4>
+                <p class="mb-6">Mándame tu mayor desafío en la cocina y en 48h te envío un video personalizado.</p>
+                <p class="font-bold text-2xl mb-2">$149 USD</p>
+                <p class="text-sm text-gray-600 mb-6">Precios ajustados por país: MX 70%, CO 60%, AR 50%</p>
+                <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20la%20asesoría%20express" class="bg-green-500 text-white font-bold py-3 px-6 rounded-full hover:bg-green-600">
+                    Solicitar Asesoría
+                </a>
+                <p class="text-xs text-gray-500 mt-2">💬 Se abrirá WhatsApp para consultar precios regionales</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contacto" class="py-20 px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Cotiza tu Pastel Personalizado</h2>
+        <form class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 font-bold mb-2">Nombre *</label>
+                <input type="text" id="name" name="name" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500" />
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 font-bold mb-2">Email *</label>
+                <input type="email" id="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500" />
+            </div>
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700 font-bold mb-2">Descripción del Pastel *</label>
+                <textarea id="description" name="description" rows="4" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500" placeholder="Cuéntame sobre tu pastel ideal..."></textarea>
+            </div>
+            <button type="submit" class="w-full bg-pink-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-pink-600">
+                Solicitar Cotización
+            </button>
+        </form>
+    </section>
+
+    <!-- WhatsApp Integration -->
+    <section class="py-20 px-4 bg-pink-100">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">¡Únete a Nuestra Comunidad!</h2>
+            <p class="text-lg mb-8">Recibe tips exclusivos, participa en talleres en vivo y conecta con otros amantes de la repostería.</p>
+            <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20unirme%20al%20grupo%20de%20WhatsApp" 
+               class="bg-green-500 text-white font-bold py-3 px-8 rounded-full hover:bg-green-600 transition-colors">
+                Únete al Grupo de WhatsApp
+            </a>
+        </div>
+    </section>
+</body>
+</html>

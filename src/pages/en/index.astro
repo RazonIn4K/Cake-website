@@ -1,13 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../layouts/Layout.astro';
-import CakeGalleryHero from '../components/CakeGalleryHero.astro';
-import LocalBusinessInfo from '../components/LocalBusinessInfo.astro';
-import TestimonialsSection from '../components/TestimonialsSection.astro';
-import CakeOrderForm from '../components/CakeOrderForm.astro';
-import SecondaryOfferingsSection from '../components/SecondaryOfferingsSection.astro';
+import Layout from '../../layouts/Layout.astro';
+import CakeGalleryHero from '../../components/CakeGalleryHero.astro';
+import LocalBusinessInfo from '../../components/LocalBusinessInfo.astro';
+import TestimonialsSection from '../../components/TestimonialsSection.astro';
+import CakeOrderForm from '../../components/CakeOrderForm.astro';
+import SecondaryOfferingsSection from '../../components/SecondaryOfferingsSection.astro';
 
-// Fetch collections for local cake business
+// Fetch collections for local cake business (English versions)
 const [cakes, business, testimonials, additionalOfferings] = await Promise.all([
   getCollection('cakes'),
   getCollection('business'),
@@ -15,44 +15,44 @@ const [cakes, business, testimonials, additionalOfferings] = await Promise.all([
   getCollection('additional-offerings'),
 ]);
 
-// Filter and sort Spanish content
-const cakesEs = cakes
-  .filter((entry) => entry.id.startsWith('es/'))
+// Filter and sort English content
+const cakesEn = cakes
+  .filter((entry) => entry.id.startsWith('en/'))
   .sort((a, b) => a.data.order - b.data.order);
-const businessEs = business.find((entry) => entry.id.startsWith('es/'));
-const testimonialsEs = testimonials
-  .filter((entry) => entry.id.startsWith('es/'))
+const businessEn = business.find((entry) => entry.id.startsWith('en/'));
+const testimonialsEn = testimonials
+  .filter((entry) => entry.id.startsWith('en/'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-const additionalOfferingsEs = additionalOfferings
-  .filter((entry) => entry.id.startsWith('es/'))
+const additionalOfferingsEn = additionalOfferings
+  .filter((entry) => entry.id.startsWith('en/'))
   .sort((a, b) => a.data.order - b.data.order);
 
 ---
 
 <Layout
-  title="Pasteles Personalizados en Genoa IL | Pastelería Artesanal de Genoa | Pasteles de Boda y Cumpleaños"
-  description="🎂 Pasteles artesanales personalizados en Genoa, Illinois. Especialistas en pasteles de boda, cumpleaños y celebraciones. Entrega en Genoa, Kingston y Sycamore. ⭐ 4.9/5 estrellas. Ordena tu pastel hoy."
-  lang="es"
+  title="Custom Cakes in Genoa IL | Genoa Artisan Cakes | Wedding & Birthday Cakes"
+  description="🎂 Custom artisan cakes in Genoa, Illinois. Specialists in wedding cakes, birthday cakes & celebrations. Delivery across Genoa, Kingston, and Sycamore. ⭐ 4.9/5 stars. Order your cake today."
+  lang="en"
 >
   <!-- Cake Gallery Hero - Primary Focus -->
-  <CakeGalleryHero cakes={cakesEs} lang="es" />
+  <CakeGalleryHero cakes={cakesEn} lang="en" />
 
   <!-- Local Business Information - Critical for Local Business -->
-  {businessEs && (
-    <LocalBusinessInfo businessData={businessEs} lang="es" />
+  {businessEn && (
+    <LocalBusinessInfo businessData={businessEn} lang="en" />
   )}
 
   <!-- Customer Testimonials - Social Proof -->
-  {testimonialsEs.length > 0 && (
-    <TestimonialsSection testimonials={testimonialsEs} lang="es" />
+  {testimonialsEn.length > 0 && (
+    <TestimonialsSection testimonials={testimonialsEn} lang="en" />
   )}
 
   <!-- Custom Cake Order Form - Primary Conversion Point -->
-  <CakeOrderForm lang="es" />
+  <CakeOrderForm lang="en" />
 
   <!-- Secondary Offerings - Workshops & Digital Products (Clearly Secondary) -->
-  {additionalOfferingsEs.length > 0 && (
-    <SecondaryOfferingsSection offerings={additionalOfferingsEs} lang="es" />
+  {additionalOfferingsEn.length > 0 && (
+    <SecondaryOfferingsSection offerings={additionalOfferingsEn} lang="en" />
   )}
 
   <!-- WhatsApp Community CTA - Final Engagement -->
@@ -61,20 +61,20 @@ const additionalOfferingsEs = additionalOfferings
       <div class="rounded-3xl border border-gold-accent/40 bg-white/90 p-10 text-center shadow-2xl backdrop-blur-sm md:p-16">
         <div class="text-6xl mb-6">🌟</div>
         <h2 class="text-3xl font-serif font-bold text-warm-brown md:text-4xl mb-4">
-          Síguenos en Redes Sociales
+          Follow Us on Social Media
         </h2>
         <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-          Únete a nuestra comunidad para ver nuestras últimas creaciones, recibir tips exclusivos y estar al día con promociones especiales.
+          Join our community to see our latest creations, receive exclusive tips and stay updated with special promotions.
         </p>
         
         <!-- Social Media Buttons -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
           <a
-            href="https://wa.me/18155550123?text=Hola,%20me%20interesa%20solicitar%20un%20pastel%20personalizado"
+            href="https://wa.me/18155550123?text=Hi,%20I'm%20interested%20in%20ordering%20a%20custom%20cake"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center justify-center rounded-full bg-emerald-800 px-8 py-3 text-base font-semibold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-emerald-900 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-emerald-700"
-            aria-label="Contactar por WhatsApp"
+            aria-label="Contact via WhatsApp"
           >
             <span class="mr-2">💬</span>
             WhatsApp
@@ -84,7 +84,7 @@ const additionalOfferingsEs = additionalOfferings
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center justify-center rounded-full bg-blue-600 px-8 py-3 text-base font-semibold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-2xl"
-            aria-label="Seguir en Facebook"
+            aria-label="Follow on Facebook"
           >
             <span class="mr-2">📘</span>
             Facebook
@@ -94,7 +94,7 @@ const additionalOfferingsEs = additionalOfferings
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-3 text-base font-semibold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:from-purple-600 hover:to-pink-600 hover:shadow-2xl"
-            aria-label="Seguir en Instagram"
+            aria-label="Follow on Instagram"
           >
             <span class="mr-2">📷</span>
             Instagram
@@ -103,7 +103,7 @@ const additionalOfferingsEs = additionalOfferings
         
         <!-- Social Proof -->
         <p class="text-sm text-gray-500">
-          Únete a más de 500 seguidores que ya disfrutan de nuestras creaciones
+          Join over 500 followers who already enjoy our creations
         </p>
       </div>
     </div>

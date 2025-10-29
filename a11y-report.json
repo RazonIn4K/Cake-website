@@ -1,0 +1,12 @@
+[
+  {
+    "locale": "es",
+    "url": "http://localhost:4321/",
+    "violations": []
+  },
+  {
+    "locale": "en",
+    "url": "http://localhost:4321/en/",
+    "violations": []
+  }
+]

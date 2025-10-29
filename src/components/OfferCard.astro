@@ -1,0 +1,74 @@
+---
+export interface Props {
+  title: string;
+  subtitle: string;
+  description: string;
+  basePrice: number;
+  pppNotes: string;
+  buttonText: string;
+  buttonLink: string;
+  buttonAction: 'gumroad' | 'whatsapp' | 'contact';
+  category: 'workshop' | 'digital' | 'consultation' | 'community';
+}
+
+const { 
+  title, 
+  subtitle, 
+  description, 
+  basePrice, 
+  pppNotes, 
+  buttonText, 
+  buttonLink, 
+  buttonAction,
+  category 
+} = Astro.props;
+
+const categoryIcons = {
+  workshop: '👩‍🍳',
+  digital: '📱',
+  consultation: '💬',
+  community: '👥'
+};
+
+const categoryGradients = {
+  workshop: 'from-pink-100/80 to-pink-200/70 text-pink-700',
+  digital: 'from-emerald-100/80 to-emerald-200/70 text-emerald-700',
+  consultation: 'from-purple-100/80 to-purple-200/70 text-purple-700',
+  community: 'from-amber-100/80 to-amber-200/70 text-amber-700'
+};
+
+const buttonVariants = {
+  gumroad: 'bg-gold-accent hover:bg-gold-hover text-white',
+  whatsapp: 'bg-emerald-800 hover:bg-emerald-900 text-white',
+  contact: 'bg-warm-brown hover:bg-warm-brown/90 text-white'
+};
+---
+
+<div class="group flex h-full flex-col rounded-3xl border border-white/60 bg-white/80 p-8 text-left shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+  <div class={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${categoryGradients[category]} text-3xl shadow-inner`}>
+    {categoryIcons[category]}
+  </div>
+  <h3 class="text-2xl font-serif font-semibold text-warm-brown">{title}</h3>
+  <h4 class="mt-2 text-base font-medium uppercase tracking-wide text-gold-accent">{subtitle}</h4>
+  <p class="mt-4 flex-1 text-base leading-relaxed text-gray-600">{description}</p>
+
+  <div class="mt-6 rounded-2xl bg-warm-cream/80 p-4 text-sm text-gray-600">
+    <p class="text-lg font-semibold text-warm-brown">${basePrice} USD</p>
+    <p class="mt-1 italic">{pppNotes}</p>
+  </div>
+
+  <a
+    href={buttonLink}
+    class={`mt-6 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold uppercase tracking-wide shadow-lg transition-all duration-200 ${buttonVariants[buttonAction]}`}
+    target={buttonAction === 'gumroad' ? '_blank' : '_self'}
+    rel={buttonAction === 'gumroad' ? 'noopener noreferrer' : undefined}
+  >
+    {buttonText}
+  </a>
+
+  {buttonAction === 'whatsapp' && (
+    <p class="mt-3 text-xs text-gray-500">
+      💬 Se abrirá WhatsApp para consultar precios regionales
+    </p>
+  )}
+</div>

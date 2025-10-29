@@ -1,0 +1,477 @@
+---
+export interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const texts = {
+  es: {
+    title: "Solicita Tu Pastel Personalizado",
+    subtitle: "Cuéntanos sobre tu celebración y crearemos el pastel perfecto para ti",
+    customerInfo: "Información de Contacto",
+    eventDetails: "Detalles del Evento",
+    cakeSpecs: "Especificaciones del Pastel",
+    logistics: "Logística",
+    fields: {
+      name: "Nombre completo",
+      phone: "Teléfono",
+      email: "Correo electrónico",
+      eventDate: "Fecha del evento",
+      eventType: "Tipo de evento",
+      guestCount: "Número de invitados",
+      cakeSize: "Tamaño del pastel",
+      flavors: "Sabores preferidos",
+      designPreferences: "Preferencias de diseño",
+      dietaryRestrictions: "Restricciones alimentarias",
+      deliveryAddress: "Dirección de entrega",
+      deliveryTime: "Hora preferida de entrega",
+      specialInstructions: "Instrucciones especiales",
+      budget: "Presupuesto aproximado"
+    },
+    placeholders: {
+      name: "Tu nombre completo",
+      phone: "+52 XXX XXX XXXX",
+      email: "tu@email.com",
+      eventType: "Selecciona el tipo de evento",
+      guestCount: "Número aproximado",
+      cakeSize: "Selecciona el tamaño",
+      flavors: "Ej: Chocolate, vainilla, red velvet...",
+      designPreferences: "Describe tu visión: colores, tema, estilo...",
+      dietaryRestrictions: "Alergias, sin gluten, vegano, etc.",
+      deliveryAddress: "Dirección completa para entrega",
+      specialInstructions: "Cualquier detalle adicional importante..."
+    },
+    options: {
+      eventTypes: ["Boda", "Cumpleaños", "Aniversario", "Baby Shower", "Graduación", "Celebración Corporativa", "Otro"],
+      cakeSizes: ["6 pulgadas (6-8 personas)", "8 pulgadas (10-12 personas)", "10 pulgadas (15-20 personas)", "12 pulgadas (25-30 personas)", "Múltiples pisos", "Cupcakes", "Otro tamaño"],
+      deliveryTimes: ["Mañana (9:00-12:00)", "Tarde (12:00-17:00)", "Noche (17:00-20:00)", "Hora específica"]
+    },
+    submitButton: "Enviar Solicitud",
+    requiredNote: "* Campos obligatorios",
+    leadTimeNote: "Nota: Los pedidos requieren mínimo 1 semana de anticipación. Pasteles de boda requieren 2 semanas.",
+    serviceAreaNote: "Servicio disponible en Centro, Norte y Sur de la Ciudad. Consulta costos de entrega."
+  },
+  en: {
+    title: "Order Your Custom Cake",
+    subtitle: "Tell us about your celebration and we will create the perfect cake for you",
+    customerInfo: "Contact Information",
+    eventDetails: "Event Details", 
+    cakeSpecs: "Cake Specifications",
+    logistics: "Logistics",
+    fields: {
+      name: "Full name",
+      phone: "Phone",
+      email: "Email",
+      eventDate: "Event date",
+      eventType: "Event type",
+      guestCount: "Number of guests",
+      cakeSize: "Cake size",
+      flavors: "Preferred flavors",
+      designPreferences: "Design preferences",
+      dietaryRestrictions: "Dietary restrictions",
+      deliveryAddress: "Delivery address",
+      deliveryTime: "Preferred delivery time",
+      specialInstructions: "Special instructions",
+      budget: "Approximate budget"
+    },
+    placeholders: {
+      name: "Your full name",
+      phone: "+1 XXX XXX XXXX",
+      email: "your@email.com",
+      eventType: "Select event type",
+      guestCount: "Approximate number",
+      cakeSize: "Select cake size",
+      flavors: "E.g: Chocolate, vanilla, red velvet...",
+      designPreferences: "Describe your vision: colors, theme, style...",
+      dietaryRestrictions: "Allergies, gluten-free, vegan, etc.",
+      deliveryAddress: "Complete delivery address",
+      specialInstructions: "Any additional important details..."
+    },
+    options: {
+      eventTypes: ["Wedding", "Birthday", "Anniversary", "Baby Shower", "Graduation", "Corporate Celebration", "Other"],
+      cakeSizes: ["6 inches (6-8 people)", "8 inches (10-12 people)", "10 inches (15-20 people)", "12 inches (25-30 people)", "Multi-tier", "Cupcakes", "Other size"],
+      deliveryTimes: ["Morning (9:00-12:00)", "Afternoon (12:00-17:00)", "Evening (17:00-20:00)", "Specific time"]
+    },
+    submitButton: "Submit Request",
+    requiredNote: "* Required fields",
+    leadTimeNote: "Note: Orders require minimum 1 week advance notice. Wedding cakes require 2 weeks.",
+    serviceAreaNote: "Service available in Downtown, North and South Side. Check delivery costs."
+  }
+};
+
+const t = texts[lang];
+---
+
+<!-- Custom Cake Order Form Section -->
+<section class="px-6 py-20 bg-white md:px-12" id={lang === 'es' ? 'pedido-personalizado' : 'custom-order'}>
+  <div class="mx-auto max-w-4xl">
+    
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 id="form-title" class="text-3xl font-serif font-bold text-warm-brown md:text-4xl mb-4">
+        {t.title}
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+        {t.subtitle}
+      </p>
+      
+      <!-- Important Notes -->
+      <div class="bg-gradient-to-r from-gold-accent/10 to-warm-brown/10 rounded-lg p-4 text-sm text-gray-700 space-y-2">
+        <p class="flex items-center justify-center">
+          <span class="mr-2">⏰</span>
+          {t.leadTimeNote}
+        </p>
+        <p class="flex items-center justify-center">
+          <span class="mr-2">🗺️</span>
+          {t.serviceAreaNote}
+        </p>
+      </div>
+    </div>
+
+    <!-- Order Form -->
+    <form 
+      class="space-y-8 bg-gradient-to-br from-cream/30 to-soft-pink/10 rounded-2xl p-8 shadow-xl"
+      action="/api/cake-order"
+      method="POST"
+      id="cake-order-form"
+      role="form"
+      aria-labelledby="form-title"
+      novalidate
+    >
+      
+      <!-- Hidden field for language -->
+      <input type="hidden" name="language" value={lang} />
+      
+      <!-- Customer Information -->
+      <div class="space-y-6">
+        <h3 class="text-xl font-serif font-bold text-warm-brown border-b border-warm-brown/20 pb-2">
+          <span class="mr-2">👤</span>
+          {t.customerInfo}
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Name -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.name} *
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              aria-required="true"
+              aria-describedby="name-help"
+              placeholder={t.placeholders.name}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            />
+            <div id="name-help" class="sr-only">
+              {lang === 'es' ? 'Ingresa tu nombre completo para el pedido' : 'Enter your full name for the order'}
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label for="phone" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.phone} *
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              aria-required="true"
+              aria-describedby="phone-help"
+              placeholder={t.placeholders.phone}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            />
+            <div id="phone-help" class="sr-only">
+              {lang === 'es' ? 'Número de teléfono para contactarte sobre tu pedido' : 'Phone number to contact you about your order'}
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="md:col-span-2">
+            <label for="email" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.email} *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder={t.placeholders.email}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Details -->
+      <div class="space-y-6">
+        <h3 class="text-xl font-serif font-bold text-warm-brown border-b border-warm-brown/20 pb-2">
+          <span class="mr-2">🎉</span>
+          {t.eventDetails}
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Event Date -->
+          <div>
+            <label for="eventDate" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.eventDate} *
+            </label>
+            <input
+              type="date"
+              id="eventDate"
+              name="eventDate"
+              required
+              min={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            />
+          </div>
+
+          <!-- Event Type -->
+          <div>
+            <label for="eventType" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.eventType} *
+            </label>
+            <select
+              id="eventType"
+              name="eventType"
+              required
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            >
+              <option value="">{t.placeholders.eventType}</option>
+              {t.options.eventTypes.map((type) => (
+                <option value={type}>{type}</option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Guest Count -->
+          <div class="md:col-span-2">
+            <label for="guestCount" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.guestCount}
+            </label>
+            <input
+              type="number"
+              id="guestCount"
+              name="guestCount"
+              min="1"
+              placeholder={t.placeholders.guestCount}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Cake Specifications -->
+      <div class="space-y-6">
+        <h3 class="text-xl font-serif font-bold text-warm-brown border-b border-warm-brown/20 pb-2">
+          <span class="mr-2">🎂</span>
+          {t.cakeSpecs}
+        </h3>
+        
+        <div class="space-y-6">
+          <!-- Cake Size -->
+          <div>
+            <label for="cakeSize" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.cakeSize} *
+            </label>
+            <select
+              id="cakeSize"
+              name="cakeSize"
+              required
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            >
+              <option value="">{t.placeholders.cakeSize}</option>
+              {t.options.cakeSizes.map((size) => (
+                <option value={size}>{size}</option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Flavors -->
+          <div>
+            <label for="flavors" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.flavors}
+            </label>
+            <input
+              type="text"
+              id="flavors"
+              name="flavors"
+              placeholder={t.placeholders.flavors}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            />
+          </div>
+
+          <!-- Design Preferences -->
+          <div>
+            <label for="designPreferences" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.designPreferences} *
+            </label>
+            <textarea
+              id="designPreferences"
+              name="designPreferences"
+              required
+              rows="4"
+              placeholder={t.placeholders.designPreferences}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            ></textarea>
+          </div>
+
+          <!-- Dietary Restrictions -->
+          <div>
+            <label for="dietaryRestrictions" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.dietaryRestrictions}
+            </label>
+            <input
+              type="text"
+              id="dietaryRestrictions"
+              name="dietaryRestrictions"
+              placeholder={t.placeholders.dietaryRestrictions}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Logistics -->
+      <div class="space-y-6">
+        <h3 class="text-xl font-serif font-bold text-warm-brown border-b border-warm-brown/20 pb-2">
+          <span class="mr-2">🚚</span>
+          {t.logistics}
+        </h3>
+        
+        <div class="space-y-6">
+          <!-- Delivery Address -->
+          <div>
+            <label for="deliveryAddress" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.deliveryAddress} *
+            </label>
+            <textarea
+              id="deliveryAddress"
+              name="deliveryAddress"
+              required
+              rows="3"
+              placeholder={t.placeholders.deliveryAddress}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            ></textarea>
+          </div>
+
+          <!-- Delivery Time -->
+          <div>
+            <label for="deliveryTime" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.deliveryTime}
+            </label>
+            <select
+              id="deliveryTime"
+              name="deliveryTime"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            >
+              <option value="">Seleccionar horario</option>
+              {t.options.deliveryTimes.map((time) => (
+                <option value={time}>{time}</option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Special Instructions -->
+          <div>
+            <label for="specialInstructions" class="block text-sm font-medium text-warm-brown mb-2">
+              {t.fields.specialInstructions}
+            </label>
+            <textarea
+              id="specialInstructions"
+              name="specialInstructions"
+              rows="3"
+              placeholder={t.placeholders.specialInstructions}
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-warm-brown focus:outline-none focus:ring-2 focus:ring-warm-brown/20"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center pt-6">
+        <p class="text-sm text-gray-600 mb-6">
+          {t.requiredNote}
+        </p>
+        
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center rounded-full bg-warm-brown px-12 py-4 text-lg font-semibold text-white transition-all duration-300 hover:bg-warm-brown/90 hover:shadow-xl hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-warm-brown/40"
+        >
+          <span class="mr-3">📧</span>
+          {t.submitButton}
+        </button>
+        
+        <p class="text-sm text-gray-600 mt-4">
+          {lang === 'es' 
+            ? 'Te contactaremos dentro de 24 horas para confirmar detalles y cotización.'
+            : 'We will contact you within 24 hours to confirm details and provide a quote.'
+          }
+        </p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  // Form validation and submission handling
+  document.getElementById('cake-order-form')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Basic form validation
+    const requiredFields = this.querySelectorAll('[required]');
+    let isValid = true;
+    
+    requiredFields.forEach(field => {
+      if (!field.value.trim()) {
+        field.classList.add('border-red-500');
+        isValid = false;
+      } else {
+        field.classList.remove('border-red-500');
+      }
+    });
+    
+    if (!isValid) {
+      alert(document.querySelector('[name="language"]').value === 'es' 
+        ? 'Por favor completa todos los campos obligatorios.' 
+        : 'Please fill in all required fields.'
+      );
+      return;
+    }
+    
+    // For now, redirect to WhatsApp with form data
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    const message = `Hola, me interesa solicitar un pastel personalizado:
+    
+Información de contacto:
+- Nombre: ${data.name}
+- Teléfono: ${data.phone}
+- Email: ${data.email}
+
+Detalles del evento:
+- Fecha: ${data.eventDate}
+- Tipo: ${data.eventType}
+- Invitados: ${data.guestCount}
+
+Especificaciones del pastel:
+- Tamaño: ${data.cakeSize}
+- Sabores: ${data.flavors}
+- Diseño: ${data.designPreferences}
+- Restricciones: ${data.dietaryRestrictions}
+
+Logística:
+- Dirección: ${data.deliveryAddress}
+- Horario: ${data.deliveryTime}
+- Instrucciones: ${data.specialInstructions}`;
+    
+    const whatsappUrl = `https://wa.me/52XXXXXXXXX?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  });
+</script>
