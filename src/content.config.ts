@@ -1,8 +1,10 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 // Cake Gallery Collection - Primary showcase for custom cake work
 const cakeGalleryCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/cakes' }),
   schema: z.object({
     title: z.string(),
     occasion: z.enum(['wedding', 'birthday', 'celebration', 'custom']),
@@ -24,12 +26,12 @@ const cakeGalleryCollection = defineCollection({
 
 // Local Business Info Collection - Business hours, contact, service area
 const businessInfoCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/business' }),
   schema: z.object({
     businessName: z.string(),
     address: z.string(),
     serviceArea: z.array(z.string()),
-    hours: z.record(z.string()),
+    hours: z.record(z.string(), z.string()),
     contact: z.object({
       phone: z.string(),
       email: z.string(),
@@ -51,7 +53,7 @@ const businessInfoCollection = defineCollection({
 
 // Customer Testimonials Collection - Local customer reviews with cake photos
 const customerTestimonialsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/testimonials' }),
   schema: z.object({
     content: z.string(),
     customerName: z.string(),
@@ -66,7 +68,7 @@ const customerTestimonialsCollection = defineCollection({
 
 // Secondary Offerings Collection - Digital products and workshops (complementary)
 const secondaryOfferingsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/additional-offerings' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -90,7 +92,7 @@ export const collections = {
 
   // Keep old collections for backwards compatibility
   'ofertas': defineCollection({
-    type: 'content',
+    loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/ofertas' }),
     schema: z.object({
       title: z.string(),
       subtitle: z.string(),
@@ -105,7 +107,7 @@ export const collections = {
     }),
   }),
   'galeria': defineCollection({
-    type: 'content',
+    loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/galeria' }),
     schema: z.object({
       title: z.string(),
       images: z.array(z.object({

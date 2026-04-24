@@ -20,20 +20,15 @@ const {
   decoding = 'async',
   sizes,
 } = Astro.props;
-
-const webpSrc = src.replace(/\.(jpe?g|png)$/i, '.webp');
 ---
 
-<picture>
-  <source srcset={webpSrc} type="image/webp" sizes={sizes} />
-  <img
-    src={src}
-    alt={alt}
-    class={className}
-    loading={loading}
-    decoding={decoding}
-    width={width}
-    height={height}
-    sizes={sizes}
-  />
-</picture>
+<img
+  src={src}
+  alt={alt}
+  class={className}
+  loading={loading}
+  decoding={decoding}
+  width={width}
+  height={height}
+  sizes={sizes}
+/>
