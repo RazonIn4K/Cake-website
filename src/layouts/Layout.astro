@@ -6,6 +6,8 @@ export interface Props {
   ogImage?: string;
 }
 
+import '../styles/global.css';
+
 const { title, description, lang = 'es', ogImage = '/favicon.svg' } = Astro.props;
 
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;

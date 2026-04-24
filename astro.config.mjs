@@ -1,11 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://your-domain.com', // Update this with your actual domain
-  integrations: [tailwind()],
   i18n: {
     defaultLocale: "es", // Spanish is the default
     locales: ["es", "en"],
@@ -15,5 +14,8 @@ export default defineConfig({
   },
   build: {
     assets: 'assets'
+  },
+  vite: {
+    plugins: [tailwindcss()]
   }
 });
