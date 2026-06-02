@@ -1,7 +1,7 @@
 ---
 locale: 'es'
 title: 'Trío cítrico con merengue'
-image: '/images/gallery/citrus-trio.jpg'
+image: '/images/gallery/tartlets.png'
 alt: 'Mini tartaletas de limón, naranja sanguina y toronja con merengue flameado.'
 category: 'Catering'
 ---

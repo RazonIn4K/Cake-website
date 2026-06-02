@@ -1,7 +1,7 @@
 ---
 locale: 'en'
 title: 'Citrus trio with torched meringue'
-image: '/images/gallery/citrus-trio.jpg'
+image: '/images/gallery/tartlets.png'
 alt: 'Mini tartlets filled with lemon, blood orange, and grapefruit curd topped with torched meringue.'
 category: 'Catering'
 ---

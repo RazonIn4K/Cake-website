@@ -1,8 +1,8 @@
 ---
 locale: 'en'
 title: 'Strawberry celebration table'
-image: '/images/gallery/celebration-table.jpg'
-alt: 'Vanilla layer cake topped with fresh strawberries and edible flowers on linen.'
+image: '/images/gallery/vanilla-cake.png'
+alt: 'Vanilla layer cake with whipped cream, fresh strawberries, and edible flowers.'
 category: 'Events'
 featured: true
 ---
