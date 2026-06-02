@@ -1,7 +1,7 @@
 ---
 locale: 'es'
 title: 'Mesa de celebración con fresas'
-image: '/images/gallery/vanilla-cake.png'
+image: '/images/gallery/vanilla-cake.webp'
 alt: 'Pastel de vainilla de varias capas con crema batida, fresas frescas y flores comestibles.'
 category: 'Eventos'
 featured: true
