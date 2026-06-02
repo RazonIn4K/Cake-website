@@ -2,8 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background-color: theme('colors.gray.50');
-  color: theme('colors.gray.900');
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #2b1e0f;
+    background-color: #fff7e0;
+    /* dotted-grid texture, à la living-the-grid */
+    background-image: radial-gradient(rgba(43, 30, 15, 0.055) 1.4px, transparent 1.4px);
+    background-size: 22px 22px;
+    background-position: -11px -11px;
+  }
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  ::selection {
+    background: #fed74b;
+    color: #2b1e0f;
+  }
+}
+
+@layer components {
+  /* Chunky outlined "sticker" card */
+  .lg-card {
+    @apply rounded-blob border-2 border-ink bg-paper;
+    box-shadow: 6px 7px 0 0 #2b1e0f;
+  }
+  /* Pill button with offset shadow + press interaction (color set via bg/text utilities) */
+  .lg-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-ink font-display font-bold leading-none transition-transform;
+    box-shadow: 3px 4px 0 0 #2b1e0f;
+  }
+  .lg-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 5px 0 0 #2b1e0f; }
+  .lg-btn:active { transform: translate(2px, 3px); box-shadow: 1px 1px 0 0 #2b1e0f; }
+  .lg-btn:focus-visible { outline: 3px solid #2b1e0f; outline-offset: 3px; }
+  /* Small label pill */
+  .lg-tag {
+    @apply inline-flex items-center gap-1 rounded-full border-2 border-ink px-3 py-1 text-xs font-extrabold uppercase tracking-wide;
+  }
+  /* Numbered circle badge */
+  .lg-num {
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-ink font-display text-lg font-extrabold;
+    box-shadow: 2px 3px 0 0 #2b1e0f;
+  }
+  /* Form field */
+  .lg-input {
+    @apply w-full rounded-2xl border-2 border-ink bg-paper px-4 py-2.5 font-sans text-ink outline-none transition;
+  }
+  .lg-input::placeholder { color: #9a8a64; }
+  .lg-input:focus { box-shadow: 3px 4px 0 0 #2b1e0f; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
