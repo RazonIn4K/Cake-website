@@ -39,7 +39,7 @@ const copy = {
     noscript: 'Activa JavaScript para preparar y enviar tu solicitud por WhatsApp.',
     fallbackTitle: 'Tu solicitud está lista',
     fallbackBody:
-      'El canal de WhatsApp estará disponible muy pronto. Copia este resumen y guárdalo para enviarlo en cuanto esté disponible.',
+      'Copia este resumen y envíalo por WhatsApp para recibir tu cotización.',
     copyButton: 'Copiar resumen',
     copiedButton: '¡Copiado!',
     msgIntro: 'Hola, quiero solicitar una cotización de pastel.',
@@ -82,7 +82,7 @@ const copy = {
     noscript: 'Enable JavaScript to prepare and send your request via WhatsApp.',
     fallbackTitle: 'Your request is ready',
     fallbackBody:
-      'The WhatsApp channel will be available very soon. Copy this summary and keep it so you can send it as soon as it is ready.',
+      'Copy this summary and send it to us on WhatsApp to receive your quote.',
     copyButton: 'Copy summary',
     copiedButton: 'Copied!',
     msgIntro: 'Hi, I would like to request a cake quote.',
@@ -249,8 +249,11 @@ const labelClass = 'block text-sm font-medium text-gray-800';
 
       if (WHATSAPP_NUMBER) {
         const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-        window.open(url, '_blank', 'noopener');
-      } else if (result && summaryEl) {
+        const win = window.open(url, '_blank', 'noopener');
+        if (win) return;
+        // Popup blocked (or no number) — fall through to a copyable summary.
+      }
+      if (result && summaryEl) {
         summaryEl.value = message;
         result.classList.remove('hidden');
         const statusEl = document.getElementById('qf-status');
