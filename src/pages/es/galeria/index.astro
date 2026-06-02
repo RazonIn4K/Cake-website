@@ -24,15 +24,16 @@ const rendered = await Promise.all(
 );
 ---
 <BaseLayout lang="es" title="Galería de pasteles" description="Descubre pasteles personalizados creados por Elizabeth para cumpleaños, bodas y celebraciones.">
-  <section class="mx-auto max-w-5xl px-4 py-16">
-    <header class="max-w-3xl">
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900">Galería</h1>
-      <p class="mt-3 text-lg text-gray-600">
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+    <header class="max-w-2xl">
+      <span class="lg-tag bg-pink-soft text-ink">🎂 Galería</span>
+      <h1 class="mt-4 font-display text-4xl font-extrabold text-ink sm:text-5xl">Galería</h1>
+      <p class="mt-3 text-lg font-semibold text-ink-soft">
         Un vistazo a pasteles personalizados diseñados para cumpleaños, bodas y celebraciones familiares.
       </p>
     </header>
 
-    <div class="mt-10 grid gap-8 sm:grid-cols-2">
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
       {rendered.map(({ item, Content }) => (
         <GalleryCard item={item} locale="es">
           <Content slot="description" />

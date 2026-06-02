@@ -6,111 +6,104 @@ const description =
   'Elizabeth crea pasteles personalizados para cumpleaños, bodas, quinceañeras y eventos familiares. Envía tu idea, fecha y número de porciones para recibir una cotización.';
 
 const steps = [
-  { title: 'Envía tu solicitud', detail: 'Cuéntanos tu idea, la fecha del evento y el número de porciones.' },
-  { title: 'Revisamos disponibilidad', detail: 'Confirmamos si tenemos espacio para tu fecha y los detalles del pastel.' },
-  { title: 'Recibes cotización', detail: 'Te enviamos un precio estimado según el diseño, tamaño y los ingredientes.' },
-  { title: 'Confirmas tu pedido', detail: 'Acordamos los últimos detalles y reservamos tu fecha.' },
-  { title: 'Recoges tu pastel', detail: 'Te compartimos el lugar y la hora de recogida acordada.' }
+  { title: 'Envía tu solicitud', detail: 'Cuéntanos tu idea, la fecha del evento y el número de porciones.', color: 'bg-sun' },
+  { title: 'Revisamos disponibilidad', detail: 'Confirmamos si tenemos espacio para tu fecha y los detalles del pastel.', color: 'bg-coral' },
+  { title: 'Recibes cotización', detail: 'Te enviamos un precio estimado según el diseño, tamaño y los ingredientes.', color: 'bg-pink' },
+  { title: 'Confirmas tu pedido', detail: 'Acordamos los últimos detalles y reservamos tu fecha.', color: 'bg-teal' },
+  { title: 'Recoges tu pastel', detail: 'Te compartimos el lugar y la hora de recogida acordada.', color: 'bg-sky' }
 ];
 
 const categories = [
-  { title: 'Cumpleaños', detail: 'Pasteles temáticos para niños y adultos.' },
-  { title: 'Bodas', detail: 'Diseños elegantes para tu celebración.' },
-  { title: 'Quinceañeras', detail: 'Pasteles especiales para los quince años.' },
-  { title: 'Eventos familiares', detail: 'Bautizos, aniversarios y reuniones.' }
+  { title: 'Cumpleaños', detail: 'Pasteles temáticos para niños y adultos.', emoji: '🎉', color: 'bg-pink-soft' },
+  { title: 'Bodas', detail: 'Diseños elegantes para tu celebración.', emoji: '💍', color: 'bg-sky-soft' },
+  { title: 'Quinceañeras', detail: 'Pasteles especiales para los quince años.', emoji: '👑', color: 'bg-violet-soft' },
+  { title: 'Eventos familiares', detail: 'Bautizos, aniversarios y reuniones.', emoji: '🎈', color: 'bg-lime-soft' }
 ];
 ---
 <BaseLayout lang="es" title={pageTitle} description={description}>
   <!-- 1. Hero -->
-  <section class="mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 py-16 text-center sm:py-20">
-    <span class="inline-flex items-center justify-center rounded-full bg-brand-100 px-4 py-1 text-sm font-semibold text-brand-700">
-      Pasteles por encargo
-    </span>
-    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-      Pasteles hechos por encargo para cumpleaños, bodas y celebraciones
-    </h1>
-    <p class="max-w-2xl text-lg text-gray-600">{description}</p>
-    <div class="flex flex-col gap-3 sm:flex-row">
-      <a
-        href="/es/contacto/"
-        class="inline-flex items-center justify-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2"
-      >
-        Solicitar cotización
-      </a>
-      <a
-        href="/es/galeria/"
-        class="inline-flex items-center justify-center rounded-full border border-brand-300 bg-white px-6 py-3 text-sm font-semibold text-brand-700 transition hover:border-brand-400 hover:text-brand-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2"
-      >
-        Ver galería
-      </a>
+  <section class="relative overflow-hidden">
+    <span class="pointer-events-none absolute left-[7%] top-14 text-3xl sm:text-4xl" aria-hidden="true">✨</span>
+    <span class="pointer-events-none absolute right-[9%] top-24 text-2xl sm:text-3xl" aria-hidden="true">⭐</span>
+    <span class="pointer-events-none absolute left-[13%] bottom-8 text-2xl sm:text-3xl" aria-hidden="true">💗</span>
+    <span class="pointer-events-none absolute right-[13%] bottom-14 text-2xl sm:text-3xl" aria-hidden="true">🧁</span>
+    <div class="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-16 text-center sm:py-24">
+      <span class="lg-tag bg-sun text-ink shadow-sticker-sm">✨ Pasteles por encargo</span>
+      <h1 class="font-display text-4xl font-extrabold leading-[1.05] text-ink sm:text-6xl">
+        Pasteles hechos por encargo para cumpleaños, bodas y
+        <span class="relative inline-block">
+          <span class="relative z-10">celebraciones</span>
+          <span class="absolute inset-x-0 bottom-1 z-0 h-3 rounded-full bg-sun sm:h-4" aria-hidden="true"></span>
+        </span>
+      </h1>
+      <p class="max-w-2xl text-lg font-semibold text-ink-soft">{description}</p>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <a href="/es/contacto/" class="lg-btn bg-coral px-7 py-3.5 text-lg text-ink">Solicitar cotización →</a>
+        <a href="/es/galeria/" class="lg-btn bg-paper px-7 py-3.5 text-lg text-ink">Ver galería</a>
+      </div>
     </div>
   </section>
 
   <!-- 2. Cómo funciona el pedido -->
-  <section class="border-t border-gray-200 bg-white/60">
-    <div class="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-16">
-      <header class="space-y-3 text-center">
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Cómo funciona el pedido</h2>
-        <p class="text-gray-600">Un proceso sencillo desde tu idea hasta la recogida de tu pastel.</p>
-      </header>
-      <ol class="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-        {steps.map((step, index) => (
-          <li class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-sm font-bold text-brand-700">
-              {index + 1}
-            </span>
-            <h3 class="mt-4 text-base font-semibold text-gray-900">{step.title}</h3>
-            <p class="mt-2 text-sm text-gray-600">{step.detail}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <header class="mx-auto mb-10 max-w-2xl text-center">
+      <span class="lg-tag bg-teal-soft text-ink">Cómo funciona</span>
+      <h2 class="mt-4 font-display text-3xl font-extrabold text-ink sm:text-4xl">Cómo funciona el pedido</h2>
+      <p class="mt-3 font-semibold text-ink-soft">Un proceso sencillo desde tu idea hasta la recogida de tu pastel.</p>
+    </header>
+    <ol class="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+      {steps.map((step, i) => (
+        <li class="lg-card p-6">
+          <span class={`lg-num ${step.color} text-ink`}>{i + 1}</span>
+          <h3 class="mt-4 font-display text-lg font-bold text-ink">{step.title}</h3>
+          <p class="mt-2 text-sm font-medium text-ink-soft">{step.detail}</p>
+        </li>
+      ))}
+    </ol>
   </section>
 
   <!-- 3. Política de recogida -->
-  <section class="mx-auto max-w-5xl px-4 py-16">
-    <div class="rounded-2xl border border-brand-200 bg-brand-50 p-8">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Recogida con cita previa</h2>
-      <p class="mt-4 max-w-3xl text-gray-700">
-        La mayoría de los pedidos son para recogida con cita previa. Después de confirmar tu pedido, recibirás los detalles de
-        recogida y la hora acordada. La entrega puede estar disponible en casos especiales, dependiendo de la
-        ubicación, fecha, tamaño del pastel y disponibilidad. La entrega no está garantizada y puede tener costo
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    <div class="lg-card bg-sky-soft p-8 sm:p-10">
+      <span class="lg-tag bg-paper text-ink">📍 Recogida</span>
+      <h2 class="mt-4 font-display text-2xl font-extrabold text-ink sm:text-3xl">Recogida con cita previa</h2>
+      <p class="mt-4 max-w-3xl text-base font-semibold text-ink-soft">
+        La mayoría de los pedidos son para recogida con cita previa. Después de confirmar tu pedido, recibirás los
+        detalles de recogida y la hora acordada. La entrega puede estar disponible en casos especiales, dependiendo de
+        la ubicación, fecha, tamaño del pastel y disponibilidad. La entrega no está garantizada y puede tener costo
         adicional.
       </p>
     </div>
   </section>
 
   <!-- 4. Categorías de pasteles -->
-  <section class="border-t border-gray-200 bg-white/60">
-    <div class="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-16">
-      <header class="space-y-3 text-center">
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Tipos de pasteles</h2>
-        <p class="text-gray-600">Cada pastel se diseña a la medida de tu celebración.</p>
-      </header>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {categories.map((category) => (
-          <article class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 class="text-lg font-semibold text-gray-900">{category.title}</h3>
-            <p class="mt-2 text-sm text-gray-600">{category.detail}</p>
-          </article>
-        ))}
-      </div>
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <header class="mx-auto mb-10 max-w-2xl text-center">
+      <span class="lg-tag bg-pink-soft text-ink">Tipos de pasteles</span>
+      <h2 class="mt-4 font-display text-3xl font-extrabold text-ink sm:text-4xl">Para cada celebración</h2>
+      <p class="mt-3 font-semibold text-ink-soft">Cada pastel se diseña a la medida de tu evento.</p>
+    </header>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {categories.map((c) => (
+        <article class={`lg-card ${c.color} p-6`}>
+          <span class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-ink bg-paper text-2xl shadow-sticker-sm" aria-hidden="true">{c.emoji}</span>
+          <h3 class="mt-4 font-display text-xl font-bold text-ink">{c.title}</h3>
+          <p class="mt-2 text-sm font-medium text-ink-soft">{c.detail}</p>
+        </article>
+      ))}
     </div>
   </section>
 
   <!-- 5. CTA final -->
-  <section class="mx-auto max-w-5xl px-4 py-16">
-    <div class="flex flex-col items-center gap-6 rounded-2xl bg-brand-600 px-6 py-12 text-center">
-      <h2 class="text-3xl font-bold tracking-tight text-white">¿Lista o listo para tu pastel?</h2>
-      <p class="max-w-2xl text-brand-50">
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <div class="lg-card relative overflow-hidden bg-coral p-10 text-center sm:p-14">
+      <span class="pointer-events-none absolute left-8 top-6 text-3xl" aria-hidden="true">✨</span>
+      <span class="pointer-events-none absolute right-10 bottom-8 text-3xl" aria-hidden="true">🎂</span>
+      <h2 class="font-display text-3xl font-extrabold text-ink sm:text-4xl">¿Lista o listo para tu pastel?</h2>
+      <p class="mx-auto mt-3 max-w-2xl text-base font-semibold text-ink">
         Envía tu idea, fecha y número de porciones y prepararemos una cotización para tu celebración.
       </p>
-      <a
-        href="/es/contacto/"
-        class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-brand-700 shadow-sm transition hover:bg-brand-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-600"
-      >
-        Solicitar cotización
-      </a>
+      <a href="/es/contacto/" class="lg-btn mt-7 bg-paper px-8 py-4 text-lg text-ink">Solicitar cotización →</a>
     </div>
   </section>
 </BaseLayout>

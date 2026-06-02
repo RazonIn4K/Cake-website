@@ -101,13 +101,12 @@ const copy = {
 
 const t = copy[lang];
 
-const fieldClass =
-  'mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm transition focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400';
-const labelClass = 'block text-sm font-medium text-gray-800';
+const fieldClass = 'lg-input mt-1.5';
+const labelClass = 'block font-display text-sm font-bold text-ink';
 ---
-<form id="quote-form" novalidate class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+<form id="quote-form" novalidate class="lg-card p-6 sm:p-8">
   <fieldset class="space-y-5">
-    <legend class="text-lg font-semibold text-gray-900">{t.detailsLegend}</legend>
+    <legend class="font-display text-xl font-extrabold text-ink">{t.detailsLegend}</legend>
 
     <div>
       <label class={labelClass} for="qf-name">
@@ -150,36 +149,36 @@ const labelClass = 'block text-sm font-medium text-gray-800';
 
     <div>
       <label class={labelClass} for="qf-email">
-        {t.email} <span class="font-normal text-gray-400">({t.emailOptional})</span>
+        {t.email} <span class="font-normal text-ink-muted">({t.emailOptional})</span>
       </label>
       <input id="qf-email" name="email" type="email" autocomplete="email" class={fieldClass} aria-describedby="qf-email-hint" />
-      <p id="qf-email-hint" class="mt-1 text-xs text-gray-500">{t.emailHint}</p>
+      <p id="qf-email-hint" class="mt-1.5 text-xs font-medium text-ink-muted">{t.emailHint}</p>
     </div>
   </fieldset>
 
-  <fieldset class="mt-6 space-y-3 border-t border-gray-100 pt-6">
-    <legend class="text-lg font-semibold text-gray-900">{t.fulfillmentLegend}</legend>
-    <p class="text-sm text-gray-600">{t.pickupNote}</p>
+  <fieldset class="mt-6 space-y-3 border-t-2 border-dashed border-ink/25 pt-6">
+    <legend class="font-display text-xl font-extrabold text-ink">{t.fulfillmentLegend}</legend>
+    <p class="text-sm font-medium text-ink-soft">{t.pickupNote}</p>
 
     <div>
-      <input id="qf-wants-delivery" name="wants-delivery" type="checkbox" class="peer h-4 w-4 rounded border-gray-300 align-middle text-brand-600 focus:ring-brand-400" />
-      <label for="qf-wants-delivery" class="ml-2 align-middle text-sm text-gray-800">{t.deliveryToggle}</label>
-      <div class="mt-3 hidden rounded-lg border border-brand-200 bg-brand-50 p-4 peer-checked:block">
-        <p class="text-sm text-gray-700">{t.deliveryNote}</p>
+      <input id="qf-wants-delivery" name="wants-delivery" type="checkbox" class="peer h-5 w-5 rounded border-2 border-ink align-middle accent-coral" />
+      <label for="qf-wants-delivery" class="ml-2 align-middle text-sm font-semibold text-ink">{t.deliveryToggle}</label>
+      <div class="mt-3 hidden rounded-2xl border-2 border-ink bg-sky-soft p-4 peer-checked:block">
+        <p class="text-sm font-medium text-ink-soft">{t.deliveryNote}</p>
         <div class="mt-3">
           <label class={labelClass} for="qf-delivery-zone">{t.deliveryZone}</label>
           <input id="qf-delivery-zone" name="delivery-zone" type="text" placeholder={t.deliveryZonePlaceholder} class={fieldClass} aria-describedby="qf-zone-hint" />
-          <p id="qf-zone-hint" class="mt-1 text-xs text-gray-500">{t.deliveryZoneHint}</p>
+          <p id="qf-zone-hint" class="mt-1.5 text-xs font-medium text-ink-muted">{t.deliveryZoneHint}</p>
         </div>
       </div>
     </div>
   </fieldset>
 
-  <p class="mt-6 text-sm text-gray-600">{t.photosNote}</p>
+  <p class="mt-6 text-sm font-medium text-ink-soft">{t.photosNote}</p>
 
   <button
     type="submit"
-    class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 sm:w-auto"
+    class="lg-btn mt-6 w-full bg-coral px-7 py-3.5 text-base text-ink sm:w-auto"
   >
     {t.submit}
   </button>
@@ -191,14 +190,14 @@ const labelClass = 'block text-sm font-medium text-gray-800';
 
 <p id="qf-status" role="status" aria-live="polite" class="sr-only"></p>
 
-<div id="quote-result" role="region" aria-labelledby="quote-result-title" class="mt-6 hidden rounded-2xl border border-brand-200 bg-brand-50 p-6">
-  <h3 id="quote-result-title" tabindex="-1" class="text-lg font-semibold text-gray-900 focus:outline-none">{t.fallbackTitle}</h3>
-  <p class="mt-2 text-sm text-gray-700">{t.fallbackBody}</p>
-  <textarea id="quote-summary" readonly rows="10" class="mt-4 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-xs text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+<div id="quote-result" role="region" aria-labelledby="quote-result-title" class="lg-card mt-6 hidden bg-lime-soft p-6">
+  <h3 id="quote-result-title" tabindex="-1" class="font-display text-xl font-extrabold text-ink focus:outline-none">{t.fallbackTitle}</h3>
+  <p class="mt-2 text-sm font-medium text-ink-soft">{t.fallbackBody}</p>
+  <textarea id="quote-summary" readonly rows="10" class="mt-4 block w-full rounded-2xl border-2 border-ink bg-paper px-3 py-2 font-mono text-xs text-ink focus:outline-none"></textarea>
   <button
     type="button"
     id="copy-summary"
-    class="mt-3 inline-flex items-center justify-center rounded-full border border-brand-300 bg-white px-5 py-2 text-sm font-semibold text-brand-700 transition hover:border-brand-400 hover:text-brand-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2"
+    class="lg-btn mt-3 bg-sun px-5 py-2.5 text-sm text-ink"
   >
     {t.copyButton}
   </button>
