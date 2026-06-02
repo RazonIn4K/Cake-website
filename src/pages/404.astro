@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout lang="es" noindex title="Página no encontrada | Pasteles de Elizabeth" description="La página que buscas no existe.">
+  <section class="relative mx-auto flex max-w-2xl flex-col items-center gap-6 px-4 py-24 text-center sm:py-28">
+    <span class="pointer-events-none absolute left-[12%] top-12 text-3xl" aria-hidden="true">✨</span>
+    <span class="pointer-events-none absolute right-[14%] top-20 text-2xl" aria-hidden="true">🧁</span>
+    <span class="lg-tag bg-sun text-ink shadow-sticker-sm">Error 404</span>
+    <h1 class="font-display text-4xl font-extrabold text-ink sm:text-5xl">Página no encontrada</h1>
+    <p class="text-lg font-semibold text-ink-soft">
+      Lo sentimos, esta página no existe o se movió.
+      <span class="mt-1 block text-base text-ink-soft">Sorry, this page doesn’t exist or has moved.</span>
+    </p>
+    <div class="flex flex-col gap-3 sm:flex-row">
+      <a href="/es/" class="lg-btn bg-coral px-7 py-3.5 text-lg text-ink">Inicio · Home</a>
+      <a href="/es/contacto/" class="lg-btn bg-paper px-7 py-3.5 text-lg text-ink">Solicitar cotización</a>
+    </div>
+  </section>
+</BaseLayout>

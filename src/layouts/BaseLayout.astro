@@ -7,12 +7,14 @@ interface Props {
   title?: string;
   description?: string;
   canonical?: string;
+  noindex?: boolean;
 }
 
 const {
   lang = 'es',
   title,
   description,
+  noindex = false,
   canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined
 } = Astro.props as Props;
 
@@ -40,6 +42,33 @@ const quoteLabel = lang === 'es' ? 'Solicitar cotización' : 'Request quote';
 const footerTagline =
   lang === 'es' ? 'Pasteles por encargo · Recogida con cita previa' : 'Made-to-order cakes · Pickup by appointment';
 const rights = lang === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.';
+
+// Locale alternates (translate the localized slug between es/en) for hreflang + OG.
+const slugMap: Record<'es' | 'en', Record<string, string>> = {
+  es: { galeria: 'gallery', contacto: 'contact' },
+  en: { gallery: 'galeria', contact: 'contacto' }
+};
+const otherLang = lang === 'es' ? 'en' : 'es';
+const stripped = Astro.url.pathname.replace(/^\/(es|en)/, '').replace(/^\/+|\/+$/g, '');
+const segs = stripped ? stripped.split('/') : [];
+if (segs.length > 0) segs[0] = slugMap[lang][segs[0]] ?? segs[0];
+const otherPath = segs.length > 0 ? `/${otherLang}/${segs.join('/')}/` : `/${otherLang}/`;
+const abs = (p: string) => (Astro.site ? new URL(p, Astro.site).toString() : p);
+const esUrl = abs(lang === 'es' ? Astro.url.pathname : otherPath);
+const enUrl = abs(lang === 'en' ? Astro.url.pathname : otherPath);
+const ogImage = abs('/og-image.jpg');
+const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
+const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: brand,
+  description: defaultDescription,
+  url: Astro.site ? Astro.site.toString() : undefined,
+  logo: abs('/favicon.svg'),
+  image: ogImage,
+  inLanguage: ['es', 'en']
+};
 ---
 <!DOCTYPE html>
 <html lang={lang}>
@@ -48,8 +77,27 @@ const rights = lang === 'es' ? 'Todos los derechos reservados.' : 'All rights re
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
-    {canonical && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {!noindex && canonical && <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#FFF7E0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {!noindex && <link rel="alternate" hreflang="es" href={esUrl} />}
+    {!noindex && <link rel="alternate" hreflang="en" href={enUrl} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={esUrl} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={brand} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    {!noindex && canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={brand} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
