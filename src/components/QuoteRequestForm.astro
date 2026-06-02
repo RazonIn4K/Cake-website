@@ -1,0 +1,282 @@
+---
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props as Props;
+
+// WhatsApp number in international format, digits only (no "+", spaces, or dashes).
+// Source: +1 (815) 501-2963. If this is ever cleared, the form gracefully falls
+// back to showing a copyable summary instead of linking anywhere.
+const WHATSAPP_NUMBER = '18155012963';
+
+const copy = {
+  es: {
+    detailsLegend: 'Detalles de tu pastel',
+    name: 'Nombre',
+    namePlaceholder: 'Tu nombre',
+    eventType: 'Tipo de evento',
+    eventTypePlaceholder: 'Selecciona una opción',
+    eventTypes: ['Cumpleaños', 'Boda', 'Quinceañera', 'Evento familiar', 'Otro'],
+    date: 'Fecha del evento',
+    servings: 'Número de porciones',
+    servingsPlaceholder: 'Ej. 25',
+    details: 'Tu idea (diseño, sabores, colores)',
+    detailsPlaceholder: 'Cuéntanos tu idea…',
+    email: 'Correo electrónico',
+    emailOptional: 'opcional',
+    emailHint: 'Opcional. Damos seguimiento por WhatsApp.',
+    fulfillmentLegend: 'Entrega',
+    pickupNote: 'La mayoría de los pedidos son para recogida con cita previa.',
+    deliveryToggle: 'Quiero solicitar entrega (sujeta a disponibilidad)',
+    deliveryNote:
+      'La entrega no está garantizada y puede tener costo adicional según la ubicación, la fecha y el tamaño del pastel.',
+    deliveryZone: 'Zona o ciudad de entrega',
+    deliveryZonePlaceholder: 'Ciudad o zona aproximada',
+    deliveryZoneHint: 'Solo una zona o ciudad aproximada. No necesitamos tu dirección completa.',
+    photosNote: 'Después de enviar tu solicitud, puedes compartir fotos de inspiración por WhatsApp.',
+    submit: 'Enviar por WhatsApp',
+    noscript: 'Activa JavaScript para preparar y enviar tu solicitud por WhatsApp.',
+    fallbackTitle: 'Tu solicitud está lista',
+    fallbackBody:
+      'El canal de WhatsApp estará disponible muy pronto. Copia este resumen y guárdalo para enviarlo en cuanto esté disponible.',
+    copyButton: 'Copiar resumen',
+    copiedButton: '¡Copiado!',
+    msgIntro: 'Hola, quiero solicitar una cotización de pastel.',
+    msgName: 'Nombre',
+    msgEvent: 'Tipo de evento',
+    msgDate: 'Fecha',
+    msgServings: 'Porciones',
+    msgFulfillment: 'Entrega',
+    msgPickup: 'Recogida (con cita previa)',
+    msgDelivery: 'Entrega solicitada (sujeta a disponibilidad)',
+    msgZone: 'Zona',
+    msgDetails: 'Idea',
+    msgEmail: 'Correo'
+  },
+  en: {
+    detailsLegend: 'Your cake details',
+    name: 'Name',
+    namePlaceholder: 'Your name',
+    eventType: 'Type of event',
+    eventTypePlaceholder: 'Select an option',
+    eventTypes: ['Birthday', 'Wedding', 'Quinceañera', 'Family event', 'Other'],
+    date: 'Event date',
+    servings: 'Number of servings',
+    servingsPlaceholder: 'e.g. 25',
+    details: 'Your idea (design, flavors, colors)',
+    detailsPlaceholder: 'Tell us your idea…',
+    email: 'Email',
+    emailOptional: 'optional',
+    emailHint: 'Optional. We follow up over WhatsApp.',
+    fulfillmentLegend: 'Fulfillment',
+    pickupNote: 'Most orders are pickup by appointment.',
+    deliveryToggle: 'I want to request delivery (subject to availability)',
+    deliveryNote:
+      'Delivery is not guaranteed and may include an additional fee depending on location, date, and cake size.',
+    deliveryZone: 'Delivery area or city',
+    deliveryZonePlaceholder: 'Approximate city or area',
+    deliveryZoneHint: 'Just an approximate area or city. We do not need your full address.',
+    photosNote: 'After you send your request, you can share inspiration photos over WhatsApp.',
+    submit: 'Send via WhatsApp',
+    noscript: 'Enable JavaScript to prepare and send your request via WhatsApp.',
+    fallbackTitle: 'Your request is ready',
+    fallbackBody:
+      'The WhatsApp channel will be available very soon. Copy this summary and keep it so you can send it as soon as it is ready.',
+    copyButton: 'Copy summary',
+    copiedButton: 'Copied!',
+    msgIntro: 'Hi, I would like to request a cake quote.',
+    msgName: 'Name',
+    msgEvent: 'Type of event',
+    msgDate: 'Date',
+    msgServings: 'Servings',
+    msgFulfillment: 'Fulfillment',
+    msgPickup: 'Pickup (by appointment)',
+    msgDelivery: 'Delivery requested (subject to availability)',
+    msgZone: 'Area',
+    msgDetails: 'Idea',
+    msgEmail: 'Email'
+  }
+} as const;
+
+const t = copy[lang];
+
+const fieldClass =
+  'mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm transition focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400';
+const labelClass = 'block text-sm font-medium text-gray-800';
+---
+<form id="quote-form" novalidate class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+  <fieldset class="space-y-5">
+    <legend class="text-lg font-semibold text-gray-900">{t.detailsLegend}</legend>
+
+    <div>
+      <label class={labelClass} for="qf-name">
+        {t.name} <span class="text-brand-600" aria-hidden="true">*</span>
+      </label>
+      <input id="qf-name" name="name" type="text" required autocomplete="name" placeholder={t.namePlaceholder} class={fieldClass} />
+    </div>
+
+    <div>
+      <label class={labelClass} for="qf-event-type">
+        {t.eventType} <span class="text-brand-600" aria-hidden="true">*</span>
+      </label>
+      <select id="qf-event-type" name="event-type" required class={fieldClass}>
+        <option value="" selected disabled>{t.eventTypePlaceholder}</option>
+        {t.eventTypes.map((option) => (
+          <option value={option}>{option}</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div>
+        <label class={labelClass} for="qf-date">
+          {t.date} <span class="text-brand-600" aria-hidden="true">*</span>
+        </label>
+        <input id="qf-date" name="date" type="date" required class={fieldClass} />
+      </div>
+      <div>
+        <label class={labelClass} for="qf-servings">
+          {t.servings} <span class="text-brand-600" aria-hidden="true">*</span>
+        </label>
+        <input id="qf-servings" name="servings" type="number" min="1" inputmode="numeric" required placeholder={t.servingsPlaceholder} class={fieldClass} />
+      </div>
+    </div>
+
+    <div>
+      <label class={labelClass} for="qf-details">{t.details}</label>
+      <textarea id="qf-details" name="details" rows="4" placeholder={t.detailsPlaceholder} class={fieldClass}></textarea>
+    </div>
+
+    <div>
+      <label class={labelClass} for="qf-email">
+        {t.email} <span class="font-normal text-gray-400">({t.emailOptional})</span>
+      </label>
+      <input id="qf-email" name="email" type="email" autocomplete="email" class={fieldClass} aria-describedby="qf-email-hint" />
+      <p id="qf-email-hint" class="mt-1 text-xs text-gray-500">{t.emailHint}</p>
+    </div>
+  </fieldset>
+
+  <fieldset class="mt-6 space-y-3 border-t border-gray-100 pt-6">
+    <legend class="text-lg font-semibold text-gray-900">{t.fulfillmentLegend}</legend>
+    <p class="text-sm text-gray-600">{t.pickupNote}</p>
+
+    <div>
+      <input id="qf-wants-delivery" name="wants-delivery" type="checkbox" class="peer h-4 w-4 rounded border-gray-300 align-middle text-brand-600 focus:ring-brand-400" />
+      <label for="qf-wants-delivery" class="ml-2 align-middle text-sm text-gray-800">{t.deliveryToggle}</label>
+      <div class="mt-3 hidden rounded-lg border border-brand-200 bg-brand-50 p-4 peer-checked:block">
+        <p class="text-sm text-gray-700">{t.deliveryNote}</p>
+        <div class="mt-3">
+          <label class={labelClass} for="qf-delivery-zone">{t.deliveryZone}</label>
+          <input id="qf-delivery-zone" name="delivery-zone" type="text" placeholder={t.deliveryZonePlaceholder} class={fieldClass} aria-describedby="qf-zone-hint" />
+          <p id="qf-zone-hint" class="mt-1 text-xs text-gray-500">{t.deliveryZoneHint}</p>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <p class="mt-6 text-sm text-gray-600">{t.photosNote}</p>
+
+  <button
+    type="submit"
+    class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 sm:w-auto"
+  >
+    {t.submit}
+  </button>
+
+  <noscript>
+    <p class="mt-4 text-sm text-amber-700">{t.noscript}</p>
+  </noscript>
+</form>
+
+<p id="qf-status" role="status" aria-live="polite" class="sr-only"></p>
+
+<div id="quote-result" role="region" aria-labelledby="quote-result-title" class="mt-6 hidden rounded-2xl border border-brand-200 bg-brand-50 p-6">
+  <h3 id="quote-result-title" tabindex="-1" class="text-lg font-semibold text-gray-900 focus:outline-none">{t.fallbackTitle}</h3>
+  <p class="mt-2 text-sm text-gray-700">{t.fallbackBody}</p>
+  <textarea id="quote-summary" readonly rows="10" class="mt-4 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-xs text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+  <button
+    type="button"
+    id="copy-summary"
+    class="mt-3 inline-flex items-center justify-center rounded-full border border-brand-300 bg-white px-5 py-2 text-sm font-semibold text-brand-700 transition hover:border-brand-400 hover:text-brand-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2"
+  >
+    {t.copyButton}
+  </button>
+</div>
+
+<script define:vars={{ WHATSAPP_NUMBER, t }}>
+  const form = document.getElementById('quote-form');
+  const result = document.getElementById('quote-result');
+  const summaryEl = document.getElementById('quote-summary');
+  const copyBtn = document.getElementById('copy-summary');
+
+  function buildMessage(data) {
+    const lines = [t.msgIntro, ''];
+    lines.push(`${t.msgName}: ${data.name}`);
+    lines.push(`${t.msgEvent}: ${data.eventType}`);
+    lines.push(`${t.msgDate}: ${data.date}`);
+    lines.push(`${t.msgServings}: ${data.servings}`);
+    if (data.wantsDelivery) {
+      lines.push(`${t.msgFulfillment}: ${t.msgDelivery}`);
+      if (data.zone) lines.push(`${t.msgZone}: ${data.zone}`);
+    } else {
+      lines.push(`${t.msgFulfillment}: ${t.msgPickup}`);
+    }
+    if (data.details) lines.push(`${t.msgDetails}: ${data.details}`);
+    if (data.email) lines.push(`${t.msgEmail}: ${data.email}`);
+    return lines.join('\n');
+  }
+
+  if (form) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const fd = new FormData(form);
+      const value = (key) => (fd.get(key) || '').toString().trim();
+      const data = {
+        name: value('name'),
+        eventType: value('event-type'),
+        date: value('date'),
+        servings: value('servings'),
+        details: value('details'),
+        email: value('email'),
+        wantsDelivery: fd.get('wants-delivery') === 'on',
+        zone: value('delivery-zone')
+      };
+
+      const message = buildMessage(data);
+
+      if (WHATSAPP_NUMBER) {
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank', 'noopener');
+      } else if (result && summaryEl) {
+        summaryEl.value = message;
+        result.classList.remove('hidden');
+        const statusEl = document.getElementById('qf-status');
+        if (statusEl) statusEl.textContent = t.fallbackTitle;
+        const titleEl = document.getElementById('quote-result-title');
+        if (titleEl) titleEl.focus();
+        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }
+
+  if (copyBtn && summaryEl) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(summaryEl.value);
+      } catch (_) {
+        summaryEl.focus();
+        summaryEl.select();
+      }
+      const original = t.copyButton;
+      copyBtn.textContent = t.copiedButton;
+      const statusEl = document.getElementById('qf-status');
+      if (statusEl) statusEl.textContent = t.copiedButton;
+      setTimeout(() => {
+        copyBtn.textContent = original;
+      }, 2000);
+    });
+  }
+</script>

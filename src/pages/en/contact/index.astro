@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import QuoteRequestForm from '../../../components/QuoteRequestForm.astro';
+
+const pageTitle = 'Request a quote';
+const description =
+  'Tell us your idea, the event date, and the number of servings so we can prepare a quote for your custom cake.';
+
+const steps = [
+  'Send your request',
+  'We check availability',
+  'You receive a quote',
+  'You confirm your order',
+  'Pick up your cake'
+];
+---
+<BaseLayout lang="en" title={pageTitle} description={description}>
+  <section class="mx-auto max-w-3xl px-4 py-16">
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900">Request a quote</h1>
+    <p class="mt-4 text-lg text-gray-600">{description}</p>
+
+    <div class="mt-10">
+      <QuoteRequestForm lang="en" />
+    </div>
+
+    <div class="mt-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+      <h2 class="text-xl font-semibold text-gray-900">How it works</h2>
+      <ol class="mt-4 list-decimal space-y-1 pl-5 text-gray-700">
+        {steps.map((step) => (
+          <li>{step}</li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="mt-8 rounded-2xl border border-brand-200 bg-brand-50 p-6">
+      <h2 class="text-lg font-semibold text-gray-900">Pickup by appointment</h2>
+      <p class="mt-2 text-gray-700">
+        Most orders are pickup only. After your order is confirmed, you will receive the pickup details and agreed
+        pickup time. Delivery may be available in special cases and is not guaranteed.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
