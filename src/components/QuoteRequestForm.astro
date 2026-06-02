@@ -10,6 +10,15 @@ const { lang } = Astro.props as Props;
 // back to showing a copyable summary instead of linking anywhere.
 const WHATSAPP_NUMBER = '18155012963';
 
+// ============================================================================
+// TODO (David): paste the Web3Forms access key so EVERY quote request is emailed
+// to Elizabeth — works with or without WhatsApp, nothing is lost. Get a free key
+// in ~1 min at https://web3forms.com (enter Elizabeth's email; it emails you a
+// key). The key is public and safe to commit. While this stays EMPTY, the form
+// falls back to the WhatsApp-only flow.
+// ============================================================================
+const WEB3FORMS_ACCESS_KEY = '';
+
 const copy = {
   es: {
     detailsLegend: 'Detalles de tu pastel',
@@ -25,7 +34,7 @@ const copy = {
     detailsPlaceholder: 'Cuéntanos tu idea…',
     email: 'Correo electrónico',
     emailOptional: 'opcional',
-    emailHint: 'Opcional. Damos seguimiento por WhatsApp.',
+    emailHint: 'Opcional, pero nos ayuda a responderte.',
     fulfillmentLegend: 'Entrega',
     pickupNote: 'La mayoría de los pedidos son para recogida con cita previa.',
     deliveryToggle: 'Quiero solicitar entrega (sujeta a disponibilidad)',
@@ -35,8 +44,15 @@ const copy = {
     deliveryZonePlaceholder: 'Ciudad o zona aproximada',
     deliveryZoneHint: 'Solo una zona o ciudad aproximada. No necesitamos tu dirección completa.',
     photosNote: 'Después de enviar tu solicitud, puedes compartir fotos de inspiración por WhatsApp.',
-    submit: 'Enviar por WhatsApp',
-    noscript: 'Activa JavaScript para preparar y enviar tu solicitud por WhatsApp.',
+    submit: 'Enviar solicitud',
+    sending: 'Enviando…',
+    emailSubject: 'Nueva solicitud de cotización',
+    successTitle: '¡Solicitud enviada!',
+    successBody: 'Gracias, recibimos tu solicitud y te responderemos pronto con tu cotización.',
+    errorTitle: 'No pudimos enviar tu solicitud',
+    errorBody: 'Inténtalo de nuevo en un momento, o envíanos los detalles por WhatsApp.',
+    whatsappCta: 'Enviar por WhatsApp →',
+    noscript: 'Activa JavaScript para enviar tu solicitud.',
     fallbackTitle: 'Tu solicitud está lista',
     fallbackBody:
       'Copia este resumen y envíalo por WhatsApp para recibir tu cotización.',
@@ -68,7 +84,7 @@ const copy = {
     detailsPlaceholder: 'Tell us your idea…',
     email: 'Email',
     emailOptional: 'optional',
-    emailHint: 'Optional. We follow up over WhatsApp.',
+    emailHint: 'Optional, but it helps us reply to you.',
     fulfillmentLegend: 'Fulfillment',
     pickupNote: 'Most orders are pickup by appointment.',
     deliveryToggle: 'I want to request delivery (subject to availability)',
@@ -78,8 +94,15 @@ const copy = {
     deliveryZonePlaceholder: 'Approximate city or area',
     deliveryZoneHint: 'Just an approximate area or city. We do not need your full address.',
     photosNote: 'After you send your request, you can share inspiration photos over WhatsApp.',
-    submit: 'Send via WhatsApp',
-    noscript: 'Enable JavaScript to prepare and send your request via WhatsApp.',
+    submit: 'Send request',
+    sending: 'Sending…',
+    emailSubject: 'New cake quote request',
+    successTitle: 'Request sent!',
+    successBody: 'Thanks — we received your request and will reply soon with your quote.',
+    errorTitle: 'We couldn’t send your request',
+    errorBody: 'Please try again in a moment, or send us the details on WhatsApp.',
+    whatsappCta: 'Send via WhatsApp →',
+    noscript: 'Enable JavaScript to send your request.',
     fallbackTitle: 'Your request is ready',
     fallbackBody:
       'Copy this summary and send it to us on WhatsApp to receive your quote.',
@@ -105,6 +128,7 @@ const fieldClass = 'lg-input mt-1.5';
 const labelClass = 'block font-display text-sm font-bold text-ink';
 ---
 <form id="quote-form" novalidate class="lg-card p-6 sm:p-8">
+  <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
   <fieldset class="space-y-5">
     <legend class="font-display text-xl font-extrabold text-ink">{t.detailsLegend}</legend>
 
@@ -191,23 +215,37 @@ const labelClass = 'block font-display text-sm font-bold text-ink';
 <p id="qf-status" role="status" aria-live="polite" class="sr-only"></p>
 
 <div id="quote-result" role="region" aria-labelledby="quote-result-title" class="lg-card mt-6 hidden bg-lime-soft p-6">
-  <h3 id="quote-result-title" tabindex="-1" class="font-display text-xl font-extrabold text-ink focus:outline-none">{t.fallbackTitle}</h3>
-  <p class="mt-2 text-sm font-medium text-ink-soft">{t.fallbackBody}</p>
-  <textarea id="quote-summary" readonly rows="10" class="mt-4 block w-full rounded-2xl border-2 border-ink bg-paper px-3 py-2 font-mono text-xs text-ink focus:outline-none"></textarea>
-  <button
-    type="button"
-    id="copy-summary"
-    class="lg-btn mt-3 bg-sun px-5 py-2.5 text-sm text-ink"
-  >
-    {t.copyButton}
-  </button>
+  <h3 id="quote-result-title" tabindex="-1" class="font-display text-xl font-extrabold text-ink focus:outline-none">{t.successTitle}</h3>
+  <p id="quote-result-body" class="mt-2 text-sm font-medium text-ink-soft">{t.successBody}</p>
+  <div id="quote-summary-wrap" hidden>
+    <textarea id="quote-summary" readonly rows="10" class="mt-4 block w-full rounded-2xl border-2 border-ink bg-paper px-3 py-2 font-mono text-xs text-ink focus:outline-none"></textarea>
+    <button
+      type="button"
+      id="copy-summary"
+      class="lg-btn mt-3 bg-sun px-5 py-2.5 text-sm text-ink"
+    >
+      {t.copyButton}
+    </button>
+  </div>
+  <a id="quote-result-whatsapp" href="#" target="_blank" rel="noopener" hidden class="lg-btn mt-4 bg-coral px-5 py-2.5 text-sm text-ink">
+    {t.whatsappCta}
+  </a>
 </div>
 
-<script define:vars={{ WHATSAPP_NUMBER, t }}>
+<script define:vars={{ WHATSAPP_NUMBER, WEB3FORMS_ACCESS_KEY, t }}>
   const form = document.getElementById('quote-form');
   const result = document.getElementById('quote-result');
   const summaryEl = document.getElementById('quote-summary');
+  const summaryWrap = document.getElementById('quote-summary-wrap');
   const copyBtn = document.getElementById('copy-summary');
+  const titleEl = document.getElementById('quote-result-title');
+  const bodyEl = document.getElementById('quote-result-body');
+  const waBtn = document.getElementById('quote-result-whatsapp');
+  const statusEl = document.getElementById('qf-status');
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
+  let waUrl = null;
+  let lastMessage = '';
 
   function buildMessage(data) {
     const lines = [t.msgIntro, ''];
@@ -226,41 +264,100 @@ const labelClass = 'block font-display text-sm font-bold text-ink';
     return lines.join('\n');
   }
 
+  function getData() {
+    const fd = new FormData(form);
+    const value = (key) => (fd.get(key) || '').toString().trim();
+    return {
+      name: value('name'),
+      eventType: value('event-type'),
+      date: value('date'),
+      servings: value('servings'),
+      details: value('details'),
+      email: value('email'),
+      wantsDelivery: fd.get('wants-delivery') === 'on',
+      zone: value('delivery-zone'),
+      botcheck: (fd.get('botcheck') || '').toString()
+    };
+  }
+
+  // kind: 'success' | 'error' | 'fallback'
+  function showResult(kind) {
+    if (!result) return;
+    let title, body, showSummary, isError;
+    if (kind === 'success') { title = t.successTitle; body = t.successBody; showSummary = false; isError = false; }
+    else if (kind === 'error') { title = t.errorTitle; body = t.errorBody; showSummary = true; isError = true; }
+    else { title = t.fallbackTitle; body = t.fallbackBody; showSummary = true; isError = false; }
+
+    if (titleEl) titleEl.textContent = title;
+    if (bodyEl) bodyEl.textContent = body;
+    if (summaryWrap) {
+      if (showSummary && summaryEl) { summaryEl.value = lastMessage; summaryWrap.hidden = false; }
+      else summaryWrap.hidden = true;
+    }
+    if (waBtn) {
+      if (waUrl) { waBtn.href = waUrl; waBtn.hidden = false; } else { waBtn.hidden = true; }
+    }
+    result.classList.toggle('bg-pink-soft', isError);
+    result.classList.toggle('bg-lime-soft', !isError);
+    result.classList.remove('hidden');
+    if (statusEl) statusEl.textContent = title;
+    if (titleEl) titleEl.focus();
+    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  async function sendToBackend(data) {
+    const payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: `${t.emailSubject} — ${data.name}`,
+      from_name: data.name,
+      name: data.name,
+      event_type: data.eventType,
+      date: data.date,
+      servings: data.servings,
+      fulfillment: data.wantsDelivery ? t.msgDelivery : t.msgPickup,
+      delivery_zone: data.zone,
+      details: data.details,
+      email: data.email,
+      message: lastMessage,
+      botcheck: data.botcheck
+    };
+    if (data.email) payload.replyto = data.email;
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json().catch(() => ({}));
+    return res.ok && json && json.success === true;
+  }
+
   if (form) {
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!form.reportValidity()) return;
 
-      const fd = new FormData(form);
-      const value = (key) => (fd.get(key) || '').toString().trim();
-      const data = {
-        name: value('name'),
-        eventType: value('event-type'),
-        date: value('date'),
-        servings: value('servings'),
-        details: value('details'),
-        email: value('email'),
-        wantsDelivery: fd.get('wants-delivery') === 'on',
-        zone: value('delivery-zone')
-      };
+      const data = getData();
+      if (data.botcheck) return; // honeypot tripped
+      lastMessage = buildMessage(data);
+      waUrl = WHATSAPP_NUMBER ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lastMessage)}` : null;
 
-      const message = buildMessage(data);
+      if (WEB3FORMS_ACCESS_KEY) {
+        const originalLabel = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = t.sending; }
+        if (statusEl) statusEl.textContent = t.sending;
+        let ok = false;
+        try { ok = await sendToBackend(data); } catch (_) { ok = false; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
+        showResult(ok ? 'success' : 'error');
+        return;
+      }
 
-      if (WHATSAPP_NUMBER) {
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-        const win = window.open(url, '_blank', 'noopener');
+      // No backend configured yet — WhatsApp-first flow.
+      if (waUrl) {
+        const win = window.open(waUrl, '_blank', 'noopener');
         if (win) return;
-        // Popup blocked (or no number) — fall through to a copyable summary.
       }
-      if (result && summaryEl) {
-        summaryEl.value = message;
-        result.classList.remove('hidden');
-        const statusEl = document.getElementById('qf-status');
-        if (statusEl) statusEl.textContent = t.fallbackTitle;
-        const titleEl = document.getElementById('quote-result-title');
-        if (titleEl) titleEl.focus();
-        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
+      showResult('fallback');
     });
   }
 
@@ -274,7 +371,6 @@ const labelClass = 'block font-display text-sm font-bold text-ink';
       }
       const original = t.copyButton;
       copyBtn.textContent = t.copiedButton;
-      const statusEl = document.getElementById('qf-status');
       if (statusEl) statusEl.textContent = t.copiedButton;
       setTimeout(() => {
         copyBtn.textContent = original;
