@@ -61,9 +61,9 @@ const rights = lang === 'es' ? 'Todos los derechos reservados.' : 'All rights re
   <body class="flex min-h-screen flex-col">
     <header class="sticky top-0 z-40 border-b-2 border-ink bg-cream/95 backdrop-blur">
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-        <a href={homeHref} class="group inline-flex min-w-0 items-center gap-2 font-display text-base font-extrabold text-ink sm:text-xl">
+        <a href={homeHref} class="group inline-flex min-w-0 items-center gap-2 font-display text-sm font-extrabold leading-tight text-ink sm:text-xl">
           <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-sun text-base shadow-sticker-sm transition-transform group-hover:-rotate-6" aria-hidden="true">🎂</span>
-          <span class="truncate">{brand}</span>
+          <span>{brand}</span>
         </a>
         <nav class="flex shrink-0 items-center gap-2 sm:gap-3">
           <a href={galleryHref} class="hidden rounded-full border-2 border-ink bg-paper px-4 py-2 text-sm font-bold text-ink shadow-sticker-sm transition-transform hover:-translate-y-0.5 sm:inline-flex">
