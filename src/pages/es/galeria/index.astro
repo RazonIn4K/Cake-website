@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GalleryCard from '../../../components/gallery/gallery-card.astro';
+import { assertTranslationCoverage } from '../../../content/utils';
+
+const allGallery = await getCollection('gallery');
+assertTranslationCoverage(allGallery);
+
+const esItems = allGallery
+  .filter((entry) => (entry.data.locale ?? 'es') === 'es')
+  .sort((a, b) => {
+    if ((b.data.featured ? 1 : 0) !== (a.data.featured ? 1 : 0)) {
+      return (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0);
+    }
+    return a.data.title.localeCompare(b.data.title, 'es');
+  });
+
+const rendered = await Promise.all(
+  esItems.map(async (item) => {
+    const { Content } = await item.render();
+    return { item, Content };
+  })
+);
+---
+<BaseLayout lang="es" title="Galería de pasteles" description="Descubre pasteles personalizados creados por Elizabeth para cumpleaños, bodas y celebraciones.">
+  <section class="mx-auto max-w-5xl px-4 py-16">
+    <header class="max-w-3xl">
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900">Galería</h1>
+      <p class="mt-3 text-lg text-gray-600">
+        Un vistazo a pasteles personalizados diseñados para cumpleaños, bodas y celebraciones familiares.
+      </p>
+    </header>
+
+    <div class="mt-10 grid gap-8 sm:grid-cols-2">
+      {rendered.map(({ item, Content }) => (
+        <GalleryCard item={item} locale="es">
+          <Content slot="description" />
+        </GalleryCard>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

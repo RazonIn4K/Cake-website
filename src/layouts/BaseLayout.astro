@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+
+interface Props {
+  lang?: 'es' | 'en';
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  lang = 'es',
+  title,
+  description,
+  canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined
+} = Astro.props as Props;
+
+const brand = lang === 'es' ? 'Pasteles de Elizabeth' : 'Elizabeth’s Cakes';
+
+const defaultTitle =
+  lang === 'es'
+    ? 'Pasteles de Elizabeth | Pasteles personalizados por encargo'
+    : 'Elizabeth’s Cakes | Made-to-order custom cakes';
+
+const defaultDescription =
+  lang === 'es'
+    ? 'Elizabeth crea pasteles personalizados para cumpleaños, bodas, quinceañeras y eventos familiares. Envía tu idea, fecha y número de porciones para recibir una cotización.'
+    : 'Elizabeth creates custom cakes for birthdays, weddings, quinceañeras, and family events. Send your idea, date, and serving count to request a quote.';
+
+const pageTitle = title ?? defaultTitle;
+const pageDescription = description ?? defaultDescription;
+
+const homeHref = lang === 'es' ? '/es/' : '/en/';
+const galleryHref = lang === 'es' ? '/es/galeria/' : '/en/gallery/';
+const quoteHref = lang === 'es' ? '/es/contacto/' : '/en/contact/';
+
+const galleryLabel = lang === 'es' ? 'Galería' : 'Gallery';
+const quoteLabel = lang === 'es' ? 'Solicitar cotización' : 'Request quote';
+const footerTagline =
+  lang === 'es' ? 'Pasteles por encargo · Recogida con cita previa' : 'Made-to-order cakes · Pickup by appointment';
+const rights = lang === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.';
+---
+<!DOCTYPE html>
+<html lang={lang} class="bg-gray-50 text-gray-900">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <header class="border-b border-gray-200 bg-white/90 backdrop-blur">
+      <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4">
+        <a href={homeHref} class="text-lg font-semibold text-brand-600">{brand}</a>
+        <nav class="flex items-center gap-3 text-sm font-medium text-gray-600 sm:gap-4">
+          <a href={galleryHref} class="hover:text-brand-600">{galleryLabel}</a>
+          <a
+            href={quoteHref}
+            class="inline-flex items-center rounded-full bg-brand-600 px-4 py-1.5 font-semibold text-white transition hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2"
+          >
+            {quoteLabel}
+          </a>
+          <LanguageSwitcher currentLocale={lang} />
+        </nav>
+      </div>
+    </header>
+    <main class="flex-1">
+      <slot />
+    </main>
+    <footer class="border-t border-gray-200 bg-white/80">
+      <div class="mx-auto flex max-w-5xl flex-col gap-1 px-4 py-6 text-sm text-gray-500">
+        <p class="font-medium text-gray-600">{footerTagline}</p>
+        <p>&copy; {new Date().getFullYear()} {brand}. {rights}</p>
+      </div>
+    </footer>
+  </body>
+</html>

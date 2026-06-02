@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../content/config';
+
+interface Props {
+  item: CollectionEntry<'gallery'>;
+  locale: Locale;
+}
+
+const { item, locale } = Astro.props as Props;
+const { data } = item;
+const fallbackNotice = !data.locale || data.locale === locale ? null : locale === 'es' ? 'Mostrando traducción alternativa' : 'Showing alternate locale';
+---
+<figure class="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+  <div class="aspect-[4/3] overflow-hidden bg-gray-100">
+    <img
+      src={data.image}
+      alt={data.alt}
+      loading="lazy"
+      class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+    />
+  </div>
+  <figcaption class="p-5">
+    <div class="flex items-center justify-between gap-3">
+      <h3 class="text-lg font-semibold text-gray-900">{data.title}</h3>
+      <span class="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
+        {data.category}
+      </span>
+    </div>
+    <p class="mt-2 text-sm leading-6 text-gray-600">
+      <slot name="description" />
+    </p>
+    {fallbackNotice && (
+      <p class="mt-3 text-xs uppercase tracking-wide text-amber-600">{fallbackNotice}</p>
+    )}
+  </figcaption>
+</figure>

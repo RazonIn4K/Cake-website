@@ -1,57 +1,57 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const pageTitle = 'Elizabeth’s Cakes | Made-to-order custom cakes';
+const pageTitle = 'Pasteles de Elizabeth | Pasteles personalizados por encargo';
 const description =
-  'Elizabeth creates custom cakes for birthdays, weddings, quinceañeras, and family events. Send your idea, date, and serving count to request a quote.';
+  'Elizabeth crea pasteles personalizados para cumpleaños, bodas, quinceañeras y eventos familiares. Envía tu idea, fecha y número de porciones para recibir una cotización.';
 
 const steps = [
-  { title: 'Send your request', detail: 'Tell us your idea, the event date, and how many servings you need.' },
-  { title: 'We check availability', detail: 'We confirm whether we have room for your date and cake details.' },
-  { title: 'You receive a quote', detail: 'We send an estimated price based on the design, size, and ingredients.' },
-  { title: 'You confirm your order', detail: 'We agree on the final details and reserve your date.' },
-  { title: 'Pick up your cake', detail: 'We share the agreed pickup location and time.' }
+  { title: 'Envía tu solicitud', detail: 'Cuéntanos tu idea, la fecha del evento y el número de porciones.' },
+  { title: 'Revisamos disponibilidad', detail: 'Confirmamos si tenemos espacio para tu fecha y los detalles del pastel.' },
+  { title: 'Recibes cotización', detail: 'Te enviamos un precio estimado según el diseño, tamaño y los ingredientes.' },
+  { title: 'Confirmas tu pedido', detail: 'Acordamos los últimos detalles y reservamos tu fecha.' },
+  { title: 'Recoges tu pastel', detail: 'Te compartimos el lugar y la hora de recogida acordada.' }
 ];
 
 const categories = [
-  { title: 'Birthdays', detail: 'Themed cakes for kids and adults.' },
-  { title: 'Weddings', detail: 'Elegant designs for your celebration.' },
-  { title: 'Quinceañeras', detail: 'Special cakes for the fifteenth birthday.' },
-  { title: 'Family events', detail: 'Baptisms, anniversaries, and gatherings.' }
+  { title: 'Cumpleaños', detail: 'Pasteles temáticos para niños y adultos.' },
+  { title: 'Bodas', detail: 'Diseños elegantes para tu celebración.' },
+  { title: 'Quinceañeras', detail: 'Pasteles especiales para los quince años.' },
+  { title: 'Eventos familiares', detail: 'Bautizos, aniversarios y reuniones.' }
 ];
 ---
-<BaseLayout lang="en" title={pageTitle} description={description}>
+<BaseLayout lang="es" title={pageTitle} description={description}>
   <!-- 1. Hero -->
   <section class="mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 py-16 text-center sm:py-20">
     <span class="inline-flex items-center justify-center rounded-full bg-brand-100 px-4 py-1 text-sm font-semibold text-brand-700">
-      Made-to-order cakes
+      Pasteles por encargo
     </span>
     <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-      Made-to-order cakes for birthdays, weddings, and celebrations
+      Pasteles hechos por encargo para cumpleaños, bodas y celebraciones
     </h1>
     <p class="max-w-2xl text-lg text-gray-600">{description}</p>
     <div class="flex flex-col gap-3 sm:flex-row">
       <a
-        href="/en/contact/"
+        href="/es/contacto/"
         class="inline-flex items-center justify-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2"
       >
-        Request quote
+        Solicitar cotización
       </a>
       <a
-        href="/en/gallery/"
+        href="/es/galeria/"
         class="inline-flex items-center justify-center rounded-full border border-brand-300 bg-white px-6 py-3 text-sm font-semibold text-brand-700 transition hover:border-brand-400 hover:text-brand-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2"
       >
-        View gallery
+        Ver galería
       </a>
     </div>
   </section>
 
-  <!-- 2. How ordering works -->
+  <!-- 2. Cómo funciona el pedido -->
   <section class="border-t border-gray-200 bg-white/60">
     <div class="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-16">
       <header class="space-y-3 text-center">
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900">How ordering works</h2>
-        <p class="text-gray-600">A simple process from your idea to picking up your cake.</p>
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Cómo funciona el pedido</h2>
+        <p class="text-gray-600">Un proceso sencillo desde tu idea hasta la recogida de tu pastel.</p>
       </header>
       <ol class="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
         {steps.map((step, index) => (
@@ -67,24 +67,25 @@ const categories = [
     </div>
   </section>
 
-  <!-- 3. Pickup policy -->
+  <!-- 3. Política de recogida -->
   <section class="mx-auto max-w-5xl px-4 py-16">
     <div class="rounded-2xl border border-brand-200 bg-brand-50 p-8">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Pickup by appointment</h2>
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Recogida con cita previa</h2>
       <p class="mt-4 max-w-3xl text-gray-700">
-        Most orders are pickup only. After your order is confirmed, you will receive the pickup details and agreed
-        pickup time. Delivery may be available in special cases depending on location, date, cake size, and
-        availability. Delivery is not guaranteed and may include an additional fee.
+        La mayoría de los pedidos son para recogida. Después de confirmar tu pedido, recibirás los detalles de
+        recogida y la hora acordada. La entrega puede estar disponible en casos especiales, dependiendo de la
+        ubicación, fecha, tamaño del pastel y disponibilidad. La entrega no está garantizada y puede tener costo
+        adicional.
       </p>
     </div>
   </section>
 
-  <!-- 4. Cake categories -->
+  <!-- 4. Categorías de pasteles -->
   <section class="border-t border-gray-200 bg-white/60">
     <div class="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-16">
       <header class="space-y-3 text-center">
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Cake types</h2>
-        <p class="text-gray-600">Every cake is designed to fit your celebration.</p>
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Tipos de pasteles</h2>
+        <p class="text-gray-600">Cada pastel se diseña a la medida de tu celebración.</p>
       </header>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {categories.map((category) => (
@@ -97,18 +98,18 @@ const categories = [
     </div>
   </section>
 
-  <!-- 5. Final CTA -->
+  <!-- 5. CTA final -->
   <section class="mx-auto max-w-5xl px-4 py-16">
     <div class="flex flex-col items-center gap-6 rounded-2xl bg-brand-600 px-6 py-12 text-center">
-      <h2 class="text-3xl font-bold tracking-tight text-white">Ready for your cake?</h2>
+      <h2 class="text-3xl font-bold tracking-tight text-white">¿Lista o listo para tu pastel?</h2>
       <p class="max-w-2xl text-brand-50">
-        Send your idea, date, and serving count and we will prepare a quote for your celebration.
+        Envía tu idea, fecha y número de porciones y prepararemos una cotización para tu celebración.
       </p>
       <a
-        href="/en/contact/"
+        href="/es/contacto/"
         class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-brand-700 shadow-sm transition hover:bg-brand-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-600"
       >
-        Request quote
+        Solicitar cotización
       </a>
     </div>
   </section>

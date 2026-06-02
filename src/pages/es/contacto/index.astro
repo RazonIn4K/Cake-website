@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import QuoteRequestForm from '../../../components/QuoteRequestForm.astro';
+
+const pageTitle = 'Solicitar cotización';
+const description =
+  'Cuéntanos tu idea, la fecha del evento y el número de porciones para preparar una cotización de tu pastel personalizado.';
+
+const steps = [
+  'Envía tu solicitud',
+  'Revisamos disponibilidad',
+  'Recibes cotización',
+  'Confirmas tu pedido',
+  'Recoges tu pastel'
+];
+---
+<BaseLayout lang="es" title={pageTitle} description={description}>
+  <section class="mx-auto max-w-3xl px-4 py-16">
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900">Solicitar cotización</h1>
+    <p class="mt-4 text-lg text-gray-600">{description}</p>
+
+    <div class="mt-10">
+      <QuoteRequestForm lang="es" />
+    </div>
+
+    <div class="mt-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+      <h2 class="text-xl font-semibold text-gray-900">Cómo funciona</h2>
+      <ol class="mt-4 list-decimal space-y-1 pl-5 text-gray-700">
+        {steps.map((step) => (
+          <li>{step}</li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="mt-8 rounded-2xl border border-brand-200 bg-brand-50 p-6">
+      <h2 class="text-lg font-semibold text-gray-900">Recogida con cita previa</h2>
+      <p class="mt-2 text-gray-700">
+        La mayoría de los pedidos son para recogida. Después de confirmar tu pedido, recibirás los detalles de
+        recogida y la hora acordada. La entrega puede estar disponible en casos especiales y no está garantizada.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
