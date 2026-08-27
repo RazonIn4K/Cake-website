@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Cakes by Elizabeth",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1220,
+      880
+    ],
+    "views": [
+      {
+        "id": "quote-path",
+        "label": "Pages to Web3Forms",
+        "focus": [
+          "visitor",
+          "vercel",
+          "pages",
+          "web3forms"
+        ],
+        "note": "Visitor HTTPS to Vercel static, Astro pages, then POST to Web3Forms."
+      },
+      {
+        "id": "whatsapp-lane",
+        "label": "WhatsApp fallback",
+        "focus": [
+          "pages",
+          "whatsapp"
+        ],
+        "note": "QuoteRequestForm also builds a wa.me deeplink as the no-JS fallback."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "visitor",
+      "type": "frontend",
+      "label": "Visitor",
+      "sublabel": "Browser",
+      "pos": [
+        40,
+        380
+      ],
+      "size": [
+        120,
+        56
+      ]
+    },
+    {
+      "id": "vercel",
+      "type": "cloud",
+      "label": "Vercel static",
+      "sublabel": "www.cakesbyelizabethd.com",
+      "brand": "vercel",
+      "pos": [
+        230,
+        368
+      ],
+      "size": [
+        220,
+        80
+      ]
+    },
+    {
+      "id": "pages",
+      "type": "frontend",
+      "label": "Astro SSG pages",
+      "sublabel": "/es /en gallery contact",
+      "pos": [
+        530,
+        368
+      ],
+      "size": [
+        210,
+        80
+      ]
+    },
+    {
+      "id": "web3forms",
+      "type": "external",
+      "label": "Web3Forms",
+      "sublabel": "api.web3forms.com/submit",
+      "pos": [
+        830,
+        372
+      ],
+      "size": [
+        220,
+        72
+      ]
+    },
+    {
+      "id": "whatsapp",
+      "type": "external",
+      "label": "WhatsApp",
+      "sublabel": "wa.me +1 815-501-2963",
+      "brand": "whatsapp",
+      "pos": [
+        530,
+        640
+      ],
+      "size": [
+        210,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Public Internet",
+      "wraps": [
+        "visitor"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Vercel Edge",
+      "wraps": [
+        "vercel",
+        "pages"
+      ]
+    },
+    {
+      "kind": "security-group",
+      "label": "Quote destinations",
+      "wraps": [
+        "web3forms",
+        "whatsapp"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "visitor-vercel",
+      "from": "visitor",
+      "to": "vercel",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "vercel-pages",
+      "from": "vercel",
+      "to": "pages",
+      "label": "SSG HTML",
+      "variant": "emphasis"
+    },
+    {
+      "id": "pages-web3forms",
+      "from": "pages",
+      "to": "web3forms",
+      "label": "POST quote form",
+      "variant": "emphasis"
+    },
+    {
+      "id": "pages-whatsapp",
+      "from": "pages",
+      "to": "whatsapp",
+      "label": "wa.me fallback",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 24
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Static site",
+      "items": [
+        "Astro 4 SSG on Vercel at www.cakesbyelizabethd.com (apex 308 to www)",
+        "Spanish-first routes: /es/, /es/galeria/, /es/contacto/ plus /en twins"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Quote funnel",
+      "items": [
+        "QuoteRequestForm POSTs JSON to https://api.web3forms.com/submit",
+        "No server route and no on-site storage; public Web3Forms access key only"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "WhatsApp fallback",
+      "items": [
+        "Client builds a pre-filled WhatsApp link to +1 815-501-2963",
+        "If JS is off or the POST fails, the copyable summary is the fallback"
+      ]
+    }
+  ]
+}
